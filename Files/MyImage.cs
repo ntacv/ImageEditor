@@ -165,7 +165,7 @@ namespace ProjectA2S4
 
         }
 
-        public static void OpenImage(string fileName)
+        public static void OpenImage(string fileName) 
         {
 
             try

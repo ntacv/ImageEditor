@@ -422,7 +422,7 @@ namespace ProjectA2S4
 
         public static double strInputToDouble(string input)
         {
-            double result = 0;
+            double result = 0; 
             if (input == null) return result;
             if(input.Length > 0)
             {
