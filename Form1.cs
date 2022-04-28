@@ -90,6 +90,15 @@ namespace WinFormsApp1
         {
             
             image.Blur();
+            image.Blur();
+            image.Blur();
+            image.Blur();
+            image.Blur();
+            image.Blur();
+            image.Blur();
+            image.Blur();
+            image.Blur();
+            image.Blur();
             image.From_Image_To_File(output);
             pictureBox1.ImageLocation = output;
         }
@@ -111,6 +120,30 @@ namespace WinFormsApp1
                 pictureBox1.ImageLocation = output;
             }
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            panelChooseBtn.BringToFront();
+        }
+
+        private void bringInput(object sender, EventArgs e)
+        {
+            panelInputText.BringToFront();
+        }
+
+        private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            image.Histogram();
+            image.From_Image_To_File(output);
+            pictureBox1.ImageLocation = output;
+        }
+
+        private void fractalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            image.Mandelbrot();
+            image.From_Image_To_File(output);
+            pictureBox1.ImageLocation = output;
         }
     }
 }

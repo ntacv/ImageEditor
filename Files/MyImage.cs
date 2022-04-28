@@ -858,13 +858,6 @@ namespace ProjectA2S4
 
         }
 
-        public void Blur()
-        {
-
-            int[,] matBlur = new int[3, 3] { { 1 / 9, 1 / 9, 1 / 9 }, { 1 / 9, 1 / 9, 1 / 9 }, { 1 / 9, 1 / 9, 1 / 9 } };
-
-            //Convolution(matBlur);
-        }
         public void Indicatrice()
         {
 
@@ -879,7 +872,7 @@ namespace ProjectA2S4
             imgMatrix = Produit_Matrice_Convolution(matContours, true);
         }
 
-        public void BlurKev()
+        public void Blur()
         {
             int[,] matBlur = new int[3, 3] { { 1 / 9, 1 / 9, 1 / 9 }, { 1 / 9, 1 / 9, 1 / 9 }, { 1 / 9, 1 / 9, 1 / 9 } }; 
             
