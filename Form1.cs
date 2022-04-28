@@ -67,9 +67,12 @@ namespace WinFormsApp1
         {
             //Generate QrCode
             string input = textBox1.Text;
-
-            QRCode qrCode = new QRCode(input, pathQr);
-            pictureBox2.ImageLocation = output;
+            if (input.Length < 25)
+            {
+                QRCode qrCode = new QRCode(input, pathQr);
+                pictureBox2.ImageLocation = output;
+            }
+            else label3.Text = "Input text is too long"; 
         }
 
 
@@ -89,13 +92,6 @@ namespace WinFormsApp1
         private void blurFlouToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
-            image.Blur();
-            image.Blur();
-            image.Blur();
-            image.Blur();
-            image.Blur();
-            image.Blur();
-            image.Blur();
             image.Blur();
             image.Blur();
             image.Blur();
@@ -144,6 +140,30 @@ namespace WinFormsApp1
             image.Mandelbrot();
             image.From_Image_To_File(output);
             pictureBox1.ImageLocation = output;
+        }
+
+        private void xAxisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            image.Miroir();
+            image.From_Image_To_File(output);
+            pictureBox1.ImageLocation = output;
+        }
+
+        private void blackWhiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            image.ToBlackAndWhite();
+            image.From_Image_To_File(output);
+            pictureBox1.ImageLocation = output;
+        }
+
+        private void imageCreationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //panelInputText.BringToFront();
+        }
+
+        private void imageEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelInputText.BringToFront();
         }
     }
 }

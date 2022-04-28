@@ -31,10 +31,18 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.chooseImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.effectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.greyScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.negatifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blurFlouToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.greyScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.luminosityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mirrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xAxisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yAxisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aggrandirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomInRéduirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageCreationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.histogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fractalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +65,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.button7 = new System.Windows.Forms.Button();
@@ -94,6 +103,7 @@
             // chooseImageToolStripMenuItem
             // 
             this.chooseImageToolStripMenuItem.Name = "chooseImageToolStripMenuItem";
+            this.chooseImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.chooseImageToolStripMenuItem.Size = new System.Drawing.Size(173, 29);
             this.chooseImageToolStripMenuItem.Text = "Choose Image";
             this.chooseImageToolStripMenuItem.Click += new System.EventHandler(this.chooseImageToolStripMenuItem_Click);
@@ -101,40 +111,98 @@
             // effectsToolStripMenuItem
             // 
             this.effectsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.greyScaleToolStripMenuItem,
+            this.negatifToolStripMenuItem,
             this.blurFlouToolStripMenuItem});
             this.effectsToolStripMenuItem.Name = "effectsToolStripMenuItem";
             this.effectsToolStripMenuItem.Size = new System.Drawing.Size(173, 29);
             this.effectsToolStripMenuItem.Text = "Effects";
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(240, 34);
+            this.toolStripMenuItem1.Text = "Black and White";
+            // 
+            // greyScaleToolStripMenuItem
+            // 
+            this.greyScaleToolStripMenuItem.Name = "greyScaleToolStripMenuItem";
+            this.greyScaleToolStripMenuItem.Size = new System.Drawing.Size(240, 34);
+            this.greyScaleToolStripMenuItem.Text = "GreyScale";
+            // 
+            // negatifToolStripMenuItem
+            // 
+            this.negatifToolStripMenuItem.Name = "negatifToolStripMenuItem";
+            this.negatifToolStripMenuItem.Size = new System.Drawing.Size(240, 34);
+            this.negatifToolStripMenuItem.Text = "Negatif";
+            // 
             // blurFlouToolStripMenuItem
             // 
             this.blurFlouToolStripMenuItem.Name = "blurFlouToolStripMenuItem";
-            this.blurFlouToolStripMenuItem.Size = new System.Drawing.Size(185, 34);
+            this.blurFlouToolStripMenuItem.Size = new System.Drawing.Size(240, 34);
             this.blurFlouToolStripMenuItem.Text = "Blur/Flou";
             this.blurFlouToolStripMenuItem.Click += new System.EventHandler(this.blurFlouToolStripMenuItem_Click);
             // 
             // imageEditorToolStripMenuItem
             // 
             this.imageEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.greyScaleToolStripMenuItem,
-            this.rotationToolStripMenuItem});
+            this.luminosityToolStripMenuItem,
+            this.mirrorToolStripMenuItem,
+            this.rotationToolStripMenuItem,
+            this.aggrandirToolStripMenuItem,
+            this.zoomInRéduirToolStripMenuItem});
             this.imageEditorToolStripMenuItem.Name = "imageEditorToolStripMenuItem";
             this.imageEditorToolStripMenuItem.Size = new System.Drawing.Size(173, 29);
             this.imageEditorToolStripMenuItem.Text = "Image Editor";
+            this.imageEditorToolStripMenuItem.Click += new System.EventHandler(this.imageEditorToolStripMenuItem_Click);
             // 
-            // greyScaleToolStripMenuItem
+            // luminosityToolStripMenuItem
             // 
-            this.greyScaleToolStripMenuItem.Name = "greyScaleToolStripMenuItem";
-            this.greyScaleToolStripMenuItem.Size = new System.Drawing.Size(190, 34);
-            this.greyScaleToolStripMenuItem.Text = "GreyScale";
-            this.greyScaleToolStripMenuItem.Click += new System.EventHandler(this.GreyScale);
+            this.luminosityToolStripMenuItem.Name = "luminosityToolStripMenuItem";
+            this.luminosityToolStripMenuItem.Size = new System.Drawing.Size(289, 34);
+            this.luminosityToolStripMenuItem.Text = "Luminosity";
+            // 
+            // mirrorToolStripMenuItem
+            // 
+            this.mirrorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xAxisToolStripMenuItem,
+            this.yAxisToolStripMenuItem});
+            this.mirrorToolStripMenuItem.Name = "mirrorToolStripMenuItem";
+            this.mirrorToolStripMenuItem.Size = new System.Drawing.Size(289, 34);
+            this.mirrorToolStripMenuItem.Text = "Mirror";
+            // 
+            // xAxisToolStripMenuItem
+            // 
+            this.xAxisToolStripMenuItem.Name = "xAxisToolStripMenuItem";
+            this.xAxisToolStripMenuItem.Size = new System.Drawing.Size(159, 34);
+            this.xAxisToolStripMenuItem.Text = "X axis";
+            this.xAxisToolStripMenuItem.Click += new System.EventHandler(this.xAxisToolStripMenuItem_Click);
+            // 
+            // yAxisToolStripMenuItem
+            // 
+            this.yAxisToolStripMenuItem.Name = "yAxisToolStripMenuItem";
+            this.yAxisToolStripMenuItem.Size = new System.Drawing.Size(159, 34);
+            this.yAxisToolStripMenuItem.Text = "Y axis";
             // 
             // rotationToolStripMenuItem
             // 
             this.rotationToolStripMenuItem.Name = "rotationToolStripMenuItem";
-            this.rotationToolStripMenuItem.Size = new System.Drawing.Size(190, 34);
+            this.rotationToolStripMenuItem.Size = new System.Drawing.Size(289, 34);
             this.rotationToolStripMenuItem.Text = "Rotation";
             this.rotationToolStripMenuItem.Click += new System.EventHandler(this.rotationToolStripMenuItem_Click);
+            // 
+            // aggrandirToolStripMenuItem
+            // 
+            this.aggrandirToolStripMenuItem.Name = "aggrandirToolStripMenuItem";
+            this.aggrandirToolStripMenuItem.Size = new System.Drawing.Size(289, 34);
+            this.aggrandirToolStripMenuItem.Text = "ZoomOut / Aggrandir";
+            // 
+            // zoomInRéduirToolStripMenuItem
+            // 
+            this.zoomInRéduirToolStripMenuItem.Name = "zoomInRéduirToolStripMenuItem";
+            this.zoomInRéduirToolStripMenuItem.Size = new System.Drawing.Size(289, 34);
+            this.zoomInRéduirToolStripMenuItem.Text = "ZoomIn / Réduir";
             // 
             // imageCreationToolStripMenuItem
             // 
@@ -144,24 +212,26 @@
             this.imageCreationToolStripMenuItem.Name = "imageCreationToolStripMenuItem";
             this.imageCreationToolStripMenuItem.Size = new System.Drawing.Size(173, 29);
             this.imageCreationToolStripMenuItem.Text = "Image Creation";
+            this.imageCreationToolStripMenuItem.Click += new System.EventHandler(this.imageCreationToolStripMenuItem_Click);
             // 
             // histogramToolStripMenuItem
             // 
             this.histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(198, 34);
             this.histogramToolStripMenuItem.Text = "Histogram";
             this.histogramToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
             // 
             // fractalToolStripMenuItem
             // 
             this.fractalToolStripMenuItem.Name = "fractalToolStripMenuItem";
-            this.fractalToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.fractalToolStripMenuItem.Size = new System.Drawing.Size(198, 34);
             this.fractalToolStripMenuItem.Text = "Fractal";
             this.fractalToolStripMenuItem.Click += new System.EventHandler(this.fractalToolStripMenuItem_Click);
             // 
             // openImageToolStripMenuItem
             // 
             this.openImageToolStripMenuItem.Name = "openImageToolStripMenuItem";
+            this.openImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openImageToolStripMenuItem.Size = new System.Drawing.Size(173, 29);
             this.openImageToolStripMenuItem.Text = "Open Image";
             this.openImageToolStripMenuItem.Click += new System.EventHandler(this.openImageToolStripMenuItem_Click);
@@ -329,6 +399,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.textBox1);
             this.panel2.Controls.Add(this.pictureBox2);
             this.panel2.Controls.Add(this.button7);
@@ -337,6 +408,14 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(868, 672);
             this.panel2.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(78, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(0, 25);
+            this.label3.TabIndex = 3;
             // 
             // textBox1
             // 
@@ -418,7 +497,6 @@
         #endregion
         private MenuStrip menuStrip1;
         private ToolStripMenuItem imageEditorToolStripMenuItem;
-        private ToolStripMenuItem greyScaleToolStripMenuItem;
         private ToolStripMenuItem rotationToolStripMenuItem;
         private ToolStripMenuItem effectsToolStripMenuItem;
         private ToolStripMenuItem blurFlouToolStripMenuItem;
@@ -450,5 +528,15 @@
         private Button button2;
         private Button bringChoose;
         private Button bringInput2;
+        private Label label3;
+        private ToolStripMenuItem negatifToolStripMenuItem;
+        private ToolStripMenuItem luminosityToolStripMenuItem;
+        private ToolStripMenuItem aggrandirToolStripMenuItem;
+        private ToolStripMenuItem zoomInRéduirToolStripMenuItem;
+        private ToolStripMenuItem mirrorToolStripMenuItem;
+        private ToolStripMenuItem xAxisToolStripMenuItem;
+        private ToolStripMenuItem yAxisToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItem greyScaleToolStripMenuItem;
     }
 }
