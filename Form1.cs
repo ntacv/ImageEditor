@@ -27,7 +27,8 @@ namespace WinFormsApp1
             panel1.BringToFront();
             panelChooseBtn.BringToFront();
 
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
         }
 
@@ -35,25 +36,34 @@ namespace WinFormsApp1
         {
             path = "../../../Files/Img/NoWayHome.bmp";
             pictureBox1.ImageLocation = path;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             this.image = new MyImage(path);
         }
 
 
         private void ChangeImg2(object sender, EventArgs e)
         {
-            path = "../../../Files/Img/qrCode1Green.bmp";
+            path = "../../../Files/Img/Lena.bmp";
             pictureBox1.ImageLocation = path;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             this.image = new MyImage(path);
         }
 
         private void ChangeImg3(object sender, EventArgs e)
         {
-            //path = "../../../Files/Img/qrCode1Green.bmp";
-            pictureBox1.ImageLocation = output;
+            path = "../../../Files/Img/Sunset.bmp";
+            pictureBox1.ImageLocation = path;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             this.image = new MyImage(path);
         }
 
-
+        private void ChangeImgCar(object sender, EventArgs e)
+        {
+            path = "../../../Files/Img/Jesko.bmp";
+            pictureBox1.ImageLocation = path;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            this.image = new MyImage(path);
+        }
 
         private void chooseImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -164,6 +174,49 @@ namespace WinFormsApp1
         private void imageEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panelInputText.BringToFront();
+        }
+
+        private void negatifToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            image.Negatif();
+            image.From_Image_To_File(output);
+            pictureBox1.ImageLocation = output;
+        }
+
+        private void luminosityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelInputText.BringToFront();
+
+            if (textBox2.Text.Length > 0)
+            {
+                image.Luminosity(Convert.ToInt32(ProgramImage.strInputToDouble(textBox2.Text)));
+                image.From_Image_To_File(output);
+                pictureBox1.ImageLocation = output;
+            }
+        }
+
+        private void aggrandirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelInputText.BringToFront();
+
+            if (textBox2.Text.Length > 0)
+            {
+                image.Agrandissement(Convert.ToInt32(ProgramImage.strInputToDouble(textBox2.Text)));
+                image.From_Image_To_File(output);
+                pictureBox1.ImageLocation = output;
+            }
+        }
+
+        private void zoomInRéduirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelInputText.BringToFront();
+
+            if (textBox2.Text.Length > 0)
+            {
+                image.Retrecir(Convert.ToInt32(ProgramImage.strInputToDouble(textBox2.Text)));
+                image.From_Image_To_File(output);
+                pictureBox1.ImageLocation = output;
+            }
         }
     }
 }

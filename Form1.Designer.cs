@@ -51,16 +51,16 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.panelChooseBtn = new System.Windows.Forms.Panel();
+            this.lenaBtn = new System.Windows.Forms.Button();
+            this.spiderBtn = new System.Windows.Forms.Button();
+            this.carBtn = new System.Windows.Forms.Button();
+            this.parisBtn = new System.Windows.Forms.Button();
             this.panelInputText = new System.Windows.Forms.Panel();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.bringInput2 = new System.Windows.Forms.Button();
             this.bringChoose = new System.Windows.Forms.Button();
-            this.panelChooseBtn = new System.Windows.Forms.Panel();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -75,8 +75,8 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panelInputText.SuspendLayout();
             this.panelChooseBtn.SuspendLayout();
+            this.panelInputText.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -124,18 +124,21 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(240, 34);
             this.toolStripMenuItem1.Text = "Black and White";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.blackWhiteToolStripMenuItem_Click);
             // 
             // greyScaleToolStripMenuItem
             // 
             this.greyScaleToolStripMenuItem.Name = "greyScaleToolStripMenuItem";
             this.greyScaleToolStripMenuItem.Size = new System.Drawing.Size(240, 34);
             this.greyScaleToolStripMenuItem.Text = "GreyScale";
+            this.greyScaleToolStripMenuItem.Click += new System.EventHandler(this.GreyScale);
             // 
             // negatifToolStripMenuItem
             // 
             this.negatifToolStripMenuItem.Name = "negatifToolStripMenuItem";
             this.negatifToolStripMenuItem.Size = new System.Drawing.Size(240, 34);
             this.negatifToolStripMenuItem.Text = "Negatif";
+            this.negatifToolStripMenuItem.Click += new System.EventHandler(this.negatifToolStripMenuItem_Click);
             // 
             // blurFlouToolStripMenuItem
             // 
@@ -160,8 +163,9 @@
             // luminosityToolStripMenuItem
             // 
             this.luminosityToolStripMenuItem.Name = "luminosityToolStripMenuItem";
-            this.luminosityToolStripMenuItem.Size = new System.Drawing.Size(289, 34);
+            this.luminosityToolStripMenuItem.Size = new System.Drawing.Size(278, 34);
             this.luminosityToolStripMenuItem.Text = "Luminosity";
+            this.luminosityToolStripMenuItem.Click += new System.EventHandler(this.luminosityToolStripMenuItem_Click);
             // 
             // mirrorToolStripMenuItem
             // 
@@ -169,7 +173,7 @@
             this.xAxisToolStripMenuItem,
             this.yAxisToolStripMenuItem});
             this.mirrorToolStripMenuItem.Name = "mirrorToolStripMenuItem";
-            this.mirrorToolStripMenuItem.Size = new System.Drawing.Size(289, 34);
+            this.mirrorToolStripMenuItem.Size = new System.Drawing.Size(278, 34);
             this.mirrorToolStripMenuItem.Text = "Mirror";
             // 
             // xAxisToolStripMenuItem
@@ -188,21 +192,23 @@
             // rotationToolStripMenuItem
             // 
             this.rotationToolStripMenuItem.Name = "rotationToolStripMenuItem";
-            this.rotationToolStripMenuItem.Size = new System.Drawing.Size(289, 34);
+            this.rotationToolStripMenuItem.Size = new System.Drawing.Size(278, 34);
             this.rotationToolStripMenuItem.Text = "Rotation";
             this.rotationToolStripMenuItem.Click += new System.EventHandler(this.rotationToolStripMenuItem_Click);
             // 
             // aggrandirToolStripMenuItem
             // 
             this.aggrandirToolStripMenuItem.Name = "aggrandirToolStripMenuItem";
-            this.aggrandirToolStripMenuItem.Size = new System.Drawing.Size(289, 34);
-            this.aggrandirToolStripMenuItem.Text = "ZoomOut / Aggrandir";
+            this.aggrandirToolStripMenuItem.Size = new System.Drawing.Size(278, 34);
+            this.aggrandirToolStripMenuItem.Text = "ZoomOut / Agrandir";
+            this.aggrandirToolStripMenuItem.Click += new System.EventHandler(this.aggrandirToolStripMenuItem_Click);
             // 
             // zoomInRéduirToolStripMenuItem
             // 
             this.zoomInRéduirToolStripMenuItem.Name = "zoomInRéduirToolStripMenuItem";
-            this.zoomInRéduirToolStripMenuItem.Size = new System.Drawing.Size(289, 34);
+            this.zoomInRéduirToolStripMenuItem.Size = new System.Drawing.Size(278, 34);
             this.zoomInRéduirToolStripMenuItem.Text = "ZoomIn / Réduir";
+            this.zoomInRéduirToolStripMenuItem.Click += new System.EventHandler(this.zoomInRéduirToolStripMenuItem_Click);
             // 
             // imageCreationToolStripMenuItem
             // 
@@ -261,16 +267,67 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.panelChooseBtn);
             this.panel3.Controls.Add(this.panelInputText);
             this.panel3.Controls.Add(this.bringInput2);
             this.panel3.Controls.Add(this.bringChoose);
-            this.panel3.Controls.Add(this.panelChooseBtn);
             this.panel3.Controls.Add(this.pictureBox1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(868, 672);
             this.panel3.TabIndex = 5;
+            // 
+            // panelChooseBtn
+            // 
+            this.panelChooseBtn.Controls.Add(this.lenaBtn);
+            this.panelChooseBtn.Controls.Add(this.spiderBtn);
+            this.panelChooseBtn.Controls.Add(this.carBtn);
+            this.panelChooseBtn.Controls.Add(this.parisBtn);
+            this.panelChooseBtn.Location = new System.Drawing.Point(61, 85);
+            this.panelChooseBtn.Name = "panelChooseBtn";
+            this.panelChooseBtn.Size = new System.Drawing.Size(199, 364);
+            this.panelChooseBtn.TabIndex = 2;
+            // 
+            // lenaBtn
+            // 
+            this.lenaBtn.Location = new System.Drawing.Point(41, 37);
+            this.lenaBtn.Name = "lenaBtn";
+            this.lenaBtn.Size = new System.Drawing.Size(112, 34);
+            this.lenaBtn.TabIndex = 1;
+            this.lenaBtn.Text = "Lena";
+            this.lenaBtn.UseVisualStyleBackColor = true;
+            this.lenaBtn.Click += new System.EventHandler(this.ChangeImg2);
+            // 
+            // spiderBtn
+            // 
+            this.spiderBtn.Location = new System.Drawing.Point(41, 106);
+            this.spiderBtn.Name = "spiderBtn";
+            this.spiderBtn.Size = new System.Drawing.Size(112, 34);
+            this.spiderBtn.TabIndex = 1;
+            this.spiderBtn.Text = "SpiderMan";
+            this.spiderBtn.UseVisualStyleBackColor = true;
+            this.spiderBtn.Click += new System.EventHandler(this.ChangeImg);
+            // 
+            // carBtn
+            // 
+            this.carBtn.Location = new System.Drawing.Point(41, 258);
+            this.carBtn.Name = "carBtn";
+            this.carBtn.Size = new System.Drawing.Size(112, 34);
+            this.carBtn.TabIndex = 1;
+            this.carBtn.Text = "Sport car";
+            this.carBtn.UseVisualStyleBackColor = true;
+            this.carBtn.Click += new System.EventHandler(this.ChangeImgCar);
+            // 
+            // parisBtn
+            // 
+            this.parisBtn.Location = new System.Drawing.Point(41, 182);
+            this.parisBtn.Name = "parisBtn";
+            this.parisBtn.Size = new System.Drawing.Size(112, 34);
+            this.parisBtn.TabIndex = 1;
+            this.parisBtn.Text = "Paris";
+            this.parisBtn.UseVisualStyleBackColor = true;
+            this.parisBtn.Click += new System.EventHandler(this.ChangeImg3);
             // 
             // panelInputText
             // 
@@ -319,56 +376,9 @@
             this.bringChoose.Visible = false;
             this.bringChoose.Click += new System.EventHandler(this.button1_Click);
             // 
-            // panelChooseBtn
-            // 
-            this.panelChooseBtn.Controls.Add(this.button10);
-            this.panelChooseBtn.Controls.Add(this.button9);
-            this.panelChooseBtn.Controls.Add(this.button6);
-            this.panelChooseBtn.Controls.Add(this.button8);
-            this.panelChooseBtn.Location = new System.Drawing.Point(61, 85);
-            this.panelChooseBtn.Name = "panelChooseBtn";
-            this.panelChooseBtn.Size = new System.Drawing.Size(199, 364);
-            this.panelChooseBtn.TabIndex = 2;
-            // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(41, 37);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(112, 34);
-            this.button10.TabIndex = 1;
-            this.button10.Text = "NWH";
-            this.button10.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(41, 106);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(112, 34);
-            this.button9.TabIndex = 1;
-            this.button9.Text = "qrGreen";
-            this.button9.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(41, 258);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(112, 34);
-            this.button6.TabIndex = 1;
-            this.button6.Text = "button1";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(41, 182);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(112, 34);
-            this.button8.TabIndex = 1;
-            this.button8.Text = "Output";
-            this.button8.UseVisualStyleBackColor = true;
-            // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::WinFormsApp1.Properties.Resources.NoWayHome1;
+            this.pictureBox1.Image = global::WinFormsApp1.Properties.Resources.Jesko;
             this.pictureBox1.Location = new System.Drawing.Point(334, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(598, 716);
@@ -427,7 +437,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::WinFormsApp1.Properties.Resources.NoWayHome1;
+            this.pictureBox2.Image = global::WinFormsApp1.Properties.Resources.qrCode2Green;
             this.pictureBox2.Location = new System.Drawing.Point(334, 0);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(598, 716);
@@ -479,9 +489,9 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.panel3.ResumeLayout(false);
+            this.panelChooseBtn.ResumeLayout(false);
             this.panelInputText.ResumeLayout(false);
             this.panelInputText.PerformLayout();
-            this.panelChooseBtn.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
@@ -509,10 +519,10 @@
         private TabPage tabPage1;
         private Panel panel3;
         private PictureBox pictureBox1;
-        private Button button6;
-        private Button button8;
-        private Button button9;
-        private Button button10;
+        private Button carBtn;
+        private Button parisBtn;
+        private Button spiderBtn;
+        private Button lenaBtn;
         private Label label1;
         private TabPage tabPage2;
         private Panel panel2;

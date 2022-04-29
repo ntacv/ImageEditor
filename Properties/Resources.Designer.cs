@@ -63,9 +63,29 @@ namespace WinFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Jesko {
+            get {
+                object obj = ResourceManager.GetObject("Jesko", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap NoWayHome1 {
             get {
                 object obj = ResourceManager.GetObject("NoWayHome1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap qrCode2Green {
+            get {
+                object obj = ResourceManager.GetObject("qrCode2Green", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
