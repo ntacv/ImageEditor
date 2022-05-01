@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsApp1", "WinFormsApp1.csproj", "{3E38B628-1172-4A4E-A7C6-F7524C30460C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageEditorTest", "..\ImageEditorTest\ImageEditorTest.csproj", "{1E7FE542-C3CE-47F5-AC19-CFE8AA78216B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3E38B628-1172-4A4E-A7C6-F7524C30460C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E38B628-1172-4A4E-A7C6-F7524C30460C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E38B628-1172-4A4E-A7C6-F7524C30460C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E7FE542-C3CE-47F5-AC19-CFE8AA78216B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E7FE542-C3CE-47F5-AC19-CFE8AA78216B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E7FE542-C3CE-47F5-AC19-CFE8AA78216B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E7FE542-C3CE-47F5-AC19-CFE8AA78216B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

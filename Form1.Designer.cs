@@ -71,6 +71,7 @@
             this.button7 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.luminosityToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -222,15 +223,17 @@
             // 
             // histogramToolStripMenuItem
             // 
+            this.histogramToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.luminosityToolStripMenuItem1});
             this.histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(198, 34);
+            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.histogramToolStripMenuItem.Text = "Histogram";
             this.histogramToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
             // 
             // fractalToolStripMenuItem
             // 
             this.fractalToolStripMenuItem.Name = "fractalToolStripMenuItem";
-            this.fractalToolStripMenuItem.Size = new System.Drawing.Size(198, 34);
+            this.fractalToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.fractalToolStripMenuItem.Text = "Fractal";
             this.fractalToolStripMenuItem.Click += new System.EventHandler(this.fractalToolStripMenuItem_Click);
             // 
@@ -473,6 +476,13 @@
             this.panel1.Size = new System.Drawing.Size(882, 716);
             this.panel1.TabIndex = 4;
             // 
+            // luminosityToolStripMenuItem1
+            // 
+            this.luminosityToolStripMenuItem1.Name = "luminosityToolStripMenuItem1";
+            this.luminosityToolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
+            this.luminosityToolStripMenuItem1.Text = "Luminosity";
+            this.luminosityToolStripMenuItem1.Click += new System.EventHandler(this.luminosityToolStripMenuItem1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -548,5 +558,6 @@
         private ToolStripMenuItem yAxisToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
         private ToolStripMenuItem greyScaleToolStripMenuItem;
+        private ToolStripMenuItem luminosityToolStripMenuItem1;
     }
 }

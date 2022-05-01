@@ -12,25 +12,27 @@ using System.Runtime.InteropServices;
 
 namespace ProjectA2S4
 {
+    /// <summary>
+    /// Class bitmap to manipulate images
+    /// </summary>
     public class MyImage
     {
 
         #region Properties
         byte[] voidByte = new byte[] {0, 0, 0, 0};
 
-        string path;
-        byte[] data;
-        byte[] imgData;
-        //RGB[] imgPixels;
+        string path;//chemin de l'image
+        string pathFolder;
+        //byte[] data;
         RGB[,] imgMatrix;
 
         byte[] format;//66 77 = BMP
         int fileSize; //imgSize + headerSize
-        int headerSize;//54
+        int headerSize;//54 bytes
         int imgSize;//width * height * 3colors
-        int width;//20
-        int height;//20
-        int bitpercolor;//8, 24 bit/pixels
+        int width;
+        int height;
+        int bitpercolor;//=8 bits/color => 24 bits/pixel
 
         public byte[] Format { get { return format; } }
         public int FileSize { get { return fileSize; } }
@@ -38,23 +40,33 @@ namespace ProjectA2S4
         public int Height { get { return height;} }
         public int HeaderSize { get { return headerSize;} }
         public int ImageSize { get { return imgSize; } }
-        public byte[] ImgData { get { return imgData; } }
         public RGB[,] ImgMatrix { get { return imgMatrix; } }
         
 
         #endregion
 
-
+        /// <summary>
+        /// Constructor that takes a bitmap image
+        /// </summary>
+        /// <param name="path">path to the input bitmap image</param>
         public MyImage(string path)
         {
             this.path = path;
-            this.data = File.ReadAllBytes(path);
+
+            string[] folders = path.Split('/');
+            for(int i = 0; i < folders.Length-1; i++)
+            {
+                this.pathFolder += folders[i]+"/";
+            }
+
+            byte[] data = File.ReadAllBytes(path);
             byte[] formatBytes = new byte[2] { 66, 77 };
 
             if (formatBytes[0] == data[0] && formatBytes[1] == data[1])
             {
                 this.format = formatBytes;
             }
+            else this.format = new byte[2];
             this.fileSize = ProgramImage.ReadBytes(data[2..6]);
             this.imgSize = ProgramImage.ReadBytes(data[34..38]);
             this.width = ProgramImage.ReadBytes(data[18..22]);
@@ -63,7 +75,7 @@ namespace ProjectA2S4
 
             this.bitpercolor = ProgramImage.ReadBytes(data[28..30])/3;
 
-            this.imgData = data[headerSize..(data.Length)];
+            byte[] imgData = data[headerSize..(data.Length)];
 
             
             this.imgMatrix = new RGB[height, width];
@@ -78,39 +90,13 @@ namespace ProjectA2S4
                     imgMatrix[i, j] = rgb;
                 }
             }
-
-            /*
-            this.imgMatrix = new RGB[width, height];
-            int x = 0;//along height, 20
-            int y = 0;//along width, 24
-            int lenData = imgData.Length;
-
-            
-            for(int i=0; i<lenData/3  ; i++)
-            {
-
-                byte[] pixelData = new byte[3] { imgData[i * 3+2 ], imgData[i * 3+1], imgData[i * 3] };
-
-                RGB pixel = new RGB(pixelData);
-
-
-                this.imgMatrix[(height-1-x), y] = pixel;
-
-
-                if (y < width) y++;//24
-                if (x < height && y == width) { //19 && 20
-                    x++;//20
-                    y = 0;//0
-                }
-            }*/
-
         }
-
-        public void From_Image_To_File(string fileName)
+        /// <summary>
+        /// Make a bitmap file based on the input image and the modifications applied to it
+        /// </summary>
+        /// <param name="fileName">path to the output file</param>
+        public void From_Image_To_File(string fileName, bool openFile=false)
         {
-
-            fileName = "../../../Files/Img/Output.bmp";
-
             //From website
             try
             {
@@ -151,21 +137,44 @@ namespace ProjectA2S4
                         sw.BaseStream.Write(imgMatrix[i, j].ToByte(), 0, 3);
                     }
                 }
-                
                 sw.Close();
-
-                Console.WriteLine(Data());
-
-
+                if(openFile) OpenFile(pathFolder + fileName);
             }
             catch (Exception Ex)
             {
                 Console.WriteLine(Ex.ToString());
             }
-
         }
 
-        public static void OpenImage(string fileName) 
+        #region Functions
+        
+        /// <summary>
+        /// Return all the data about the image
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            string str = "Image data: \n";
+
+            if (66 == format[0] && 77 == format[1])
+            //36609 == Program.ReadBytes(new byte[] { data[0], data[1] })
+            {
+                str += format + "\n";
+            }
+            str += "Size: " + ProgramImage.ShortSize(fileSize) + "\n";
+            str += "Img size: " + ProgramImage.ShortSize(imgSize) + "\n";
+            str += "Header size: " + ProgramImage.ShortSize(headerSize) + "\n";
+            str += "Width: " + width.ToString() + " pixels\n";
+            str += "Heigth: " + height.ToString() + " pixels\n";
+            str += "bit/color: " + bitpercolor.ToString() + "\n";
+
+            return str;
+        }
+        /// <summary>
+        /// Open the bitmap image in the photo app
+        /// </summary>
+        /// <param name="fileName"></param>
+        public static void OpenFile(string fileName)
         {
 
             try
@@ -192,56 +201,30 @@ namespace ProjectA2S4
                 }
             }
         }
-
-        #region Functions
-        
-
-        public override string ToString()
-        {
-            string str = "";
-            for(int i=headerSize; i<this.data.Length; i+=3)
-            {
-                if ((i % width) == 0) str += "\n";
-                if (data[i] != 0) str += "1";
-                else str+=data[i];
-            }
-            return str;
-        }
-
-        public string Data()
-        {
-            string str = "Image data: \n";
-
-            if (66 == data[0] && 77 == data[1] )
-            //36609 == Program.ReadBytes(new byte[] { data[0], data[1] })
-            {
-                str += format+"\n";
-            }
-            str+= "Size: " + ProgramImage.ShortSize(fileSize)+"\n";
-            str+= "Img size: " + ProgramImage.ShortSize(imgSize)+"\n";
-            str+= "Header size: " + ProgramImage.ShortSize(headerSize)+"\n";
-            str+= "Width: " + width.ToString()+" pixels\n";
-            str+= "Heigth: " + height.ToString()+" pixels\n";
-            str += "bit/color: " + bitpercolor.ToString() + "\n";
-
-            return str;
-        }
-
+        /// <summary>
+        /// Affiche les données brutes de l'image
+        /// </summary>
+        /// <returns></returns>
         public string ImageToString()
         {
-            if (data == null) return " none ";
+            
+            if (imgMatrix == null) return " none ";
             string str = "";
-
+            /*
             for (int i = 0; i < data.Length; i++)
             {
                 if (i == 14) str+="\n";
                 if (i == 54) str += "\n";
                 if (i % 60 == 0) str += "\n";
-                str += ProgramImage.AlignString(data[i].ToString(), 3) + " ";
+                str += Program.AlignString(data[i].ToString(), 3) + " ";
             }
-
+            */
             return str;
         }
+        /// <summary>
+        /// Affiche la matrice en 0 et 1, 0 si le pixel et noir 
+        /// </summary>
+        /// <returns></returns>
         public string PrintMatrixBinary()
         {
             string str = "";
@@ -257,54 +240,8 @@ namespace ProjectA2S4
             return str;
 
         }
-        public string HeaderToString()
-        {
-            if (data == null) return " none ";
-            string str = "";
-
-            for (int i = 0; i < headerSize; i++)
-            {
-                if (i == 14) str += "\n";
-                if (i == 54) str += "\n";
-                str += data[i].ToString() + " ";
-            }
-
-            return str;
-        }
-        public string AllBytes()
-        {
-            if (data == null) return " none ";
-            string str = "Image Header: ";
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                if (i == 14) str += "\n";
-                if (i == 54) str += "\nImage Data: \n";
-                if (i % 60 == 0) str += "\n";
-                str += data[i].ToString() + " ";
-            }
-
-            return str;
-        }
-        public string AllBytesAlign()
-        {
-            if (data == null) return " none ";
-            string str = "Image Header: ";
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                if (i == 14) str += "\n";
-                if (i == 54) str += "\nImage Data: \n";
-                if (i % 60 == 0) str += "\n";
-                str += ProgramImage.AlignString(data[i].ToString(), 3) + " ";
-            }
-
-            return str;
-        }
-
-        
         /// <summary>
-        /// Convert 
+        /// Convertion binaire Little Endian vers valeur numérique
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -330,6 +267,11 @@ namespace ProjectA2S4
 
             return sum;
         }
+        /// <summary>
+        /// Conversion valeur numerique vers binaire Little Endian
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
         public static byte[] Convertir_Int_To_Endian(int val)
         {
             byte[] data = new byte[4];
@@ -346,112 +288,97 @@ namespace ProjectA2S4
         #endregion
 
         #region Traitement
-
-        public void Miroir()
+        /// <summary>
+        /// inverse le sens de l'image 
+        /// </summary>
+        /// <param name="axisXorY">x or y, choose which axis to apply the effect</param>
+        public void Mirror(char axisXorY='x')
         {
 
             RGB[,] tempMatrix = new RGB[height, width];
 
-
-            for (int i = 0; i < height; i++)
+            if (axisXorY == 'x')
             {
-                for (int j = 0; j < width; j++)
+                for (int i = 0; i < height; i++)
                 {
-                    tempMatrix[i, width-1-j] =  imgMatrix[i, j];
+                    for (int j = 0; j < width; j++)
+                    {
+                        tempMatrix[i, width - 1 - j] = imgMatrix[i, j];
+                    }
                 }
             }
-
-            for (int i = 0; i < height; i++)
+            else
             {
-                for (int j = 0; j < width; j++)
+                for (int i = 0; i < height; i++)
                 {
-                    imgMatrix[i,j] = tempMatrix[i, j];
+                    for (int j = 0; j < width; j++)
+                    {
+                        tempMatrix[height -1 - i, j] = imgMatrix[i, j];
+                    }
                 }
             }
-
-
+            imgMatrix = tempMatrix;
         }
-
-        public void RotationHoraire(int deg)
+        /// <summary>
+        /// rotate the image based on the degree angle input
+        /// </summary>
+        /// <param name="deg"></param>
+        public void Rotate(double deg)
         {
-            
-            if (deg == 0) return;
-            if (deg < 0) return;
+            /*
+            PI = 3.1415
+            c = cos(angle_degre/180*PI)
+            s = sin(angle_degre / 180 * PI)
+            Pour tout pixel j 0 ET x0 ET y<hauteur Alors
+                   destination(i, j) = source(x, y)
+                Sinon
+                    destination(i, j) = couleur fond
+               Fin
+            Fin
+            */
+            //Calculer l'hypoténuse et recadre l'image a la taille max avant de la rotate
+            double radian = ProgramImage.ToRadian(deg);
 
-            int newWidth = 0 ;
-            int newHeight = 0;
-
-            RGB[,] tempMatrix = null;
-            int temp = 0;
-
+            RGB[,] tempMatrix;
+            /*
             switch (deg)
             {
-                case 90:
-
+                case 90: 
                     tempMatrix = new RGB[height, width];
-
                     for (int i = 0; i < height; i++)
                     {
                         for (int j = 0; j < width; j++)
                         {
                             tempMatrix[i, width - 1 - j] = imgMatrix[i, j];
-
                         }
-
                     }
-                    break;
+                    return;
 
                 case 180:
-
                     tempMatrix = new RGB[height, width];
-
                     for (int i = 0; i < height; i++)
                     {
                         for (int j = 0; j < width; j++)
                         {
-                            tempMatrix[height -1 -i, width - 1 - j] = imgMatrix[i, j];
-
+                            tempMatrix[height - 1 - i, width - 1 - j] = imgMatrix[i, j];
                         }
-
                     }
-                    break;
+                    return;
 
                 case 270:
-
                     tempMatrix = new RGB[height, width];
-
                     for (int i = 0; i < height; i++)
                     {
                         for (int j = 0; j < width; j++)
                         {
-                            tempMatrix[ height - 1- i, j] = imgMatrix[i, j];
-
+                            tempMatrix[height - 1 - i, j] = imgMatrix[i, j];
                         }
-
                     }
-                    break;
-
+                    return;
             }
-
-
-
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    imgMatrix[i, j] = tempMatrix[i, j];
-                }
-            }
-        }
-
-        public void Rotation (double deg)
-        {
-            //Calcul l'hypoténuse et recadre l'image a la taille max avant de la rotate
-
-            double radian = ProgramImage.ToRadian(deg);
-
-            RGB[,] tempMatrix = new RGB[height, width];
-
+            */
+            tempMatrix = new RGB[height, width];
+            
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
@@ -487,85 +414,17 @@ namespace ProjectA2S4
                 }
             }
 
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    imgMatrix[i, j] = tempMatrix[i, j];
-                }
-            }
-
-            /*
-            PI = 3.1415
-            c = cos(angle_degre/180*PI)             //Précalcul du cosinus 
-            s = sin(angle_degre / 180 * PI)             // Précalcul du sinus 
-            Pour tout pixel j 0 ET x0 ET y<hauteur Alors
-                   destination(i, j) = source(x, y)
-                Sinon
-                    destination(i, j) = couleur fond
-               Fin
-            Fin
-            */
-
-
+            imgMatrix = tempMatrix;
         }
-        
-        public void RotationShear(int deg)
-        {
-            /*
-            RGB[,] tempMatrix = new RGB[height, width];
-
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    tempMatrix[i, j] = imgMatrix[i,j];
-                }
-            }
-
-            //                  [ cos(A) sin(A)]
-            //[X Y] =  [x y] *  [-sin(A) cos(A)]
-            double[,] matRotation = new double[2, 2] {
-                { Math.Cos(radian),Math.Sin(radian)},
-                { -Math.Sin(radian), Math.Cos(radian)}};
-
-
-            int center_x = width / 2;
-            int center_y = height / 2;
-
-            //int xp = (int)((x - center_x) * Math.Cos(radian) - (y - center_y) * Math.Sin(radian) + center_x) ;
-            //int yp = (int)((x - center_x) * Math.Sin(radian) + (y - center_y) * Math.Cos(radian) + center_y) ;
-            int xp = 0; int yp = 0;
-
-            for (int x = 0; x < height; ++x)
-            {
-                for (int y = 0; y < width; ++y)
-                {
-                    xp = (int)((x - center_x) * Math.Cos(radian) - (y - center_y) * Math.Sin(radian) + center_x);
-                    yp = (int)((x - center_x) * Math.Sin(radian) + (y - center_y) * Math.Cos(radian) + center_y);
-                    if (xp < tempMatrix.GetLength(0) && yp < tempMatrix.GetLength(1) && xp >= 0 && yp >= 0)
-                    {
-                        tempMatrix[xp, yp] = imgMatrix[x, y];
-                    }
-                }
-            }
-
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    imgMatrix[i, j] = tempMatrix[i, j];
-                }
-            }
-            */
-        }
-
-        public void Cisaillement(int deg, char axe)
+        /// <summary>
+        /// Tord l'image selon un axe pour un degrée donné
+        /// </summary>
+        /// <param name="deg"></param>
+        /// <param name="axis"></param>
+        public void Shear(int deg, char axis='x')
         {
             double radian = ProgramImage.ToRadian(deg);
-
             RGB[,] tempMatrix = new RGB[height, width];
-
 
             double[,] shear1 = new double[2, 2] {
                 { 1 , -Math.Tan(radian/2)},
@@ -576,7 +435,6 @@ namespace ProjectA2S4
                 {Math.Sin(radian), 1 } };
 
             //double[,] shear3 = shear1;
-
             int xp = 0; int yp = 0;
 
             for (int x = 0; x < height; ++x)
@@ -599,10 +457,11 @@ namespace ProjectA2S4
                     }
                 }
             }
-
             imgMatrix = tempMatrix;
         }
-
+        /// <summary>
+        /// Applique un effet de nuance de gris sur l'image
+        /// </summary>
         public void GreyScale()
         {
 
@@ -620,7 +479,9 @@ namespace ProjectA2S4
 
 
         }
-
+        /// <summary>
+        /// Applique un effet de noir et blanc sur l'image
+        /// </summary>
         public void ToBlackAndWhite()
         {
 
@@ -650,10 +511,11 @@ namespace ProjectA2S4
             }
 
         }
-
+        /// <summary>
+        /// Tentative de réduction du nombre de couleur par pixel
+        /// </summary>
         public void _8to4bit()
         {
-
             this.bitpercolor = bitpercolor / 2;
             this.imgSize = imgSize / 2;
             this.fileSize = headerSize + imgSize;
@@ -674,7 +536,10 @@ namespace ProjectA2S4
             }
 
         }
-
+        /// <summary>
+        /// réduit la luminosité de l'image
+        /// </summary>
+        /// <param name="percent">valeur en pourcentage</param>
         public void Luminosity(int percent)
         {
             if (percent < 0 || percent>100) return;
@@ -698,7 +563,9 @@ namespace ProjectA2S4
             }
 
         }
-
+        /// <summary>
+        /// Applique un effet d'inversion des couleurs sur l'image
+        /// </summary>
         public void Negatif()
         {
             for (int i = 0; i < height; i++)
@@ -709,12 +576,13 @@ namespace ProjectA2S4
                 }
             }
         }
-
+        /// <summary>
+        /// Augmente le nombre de pixels dans l'image par un facteur entier
+        /// </summary>
+        /// <param name="factor"></param>
         public void Agrandissement(double factor)
         {
             if (factor <= 0 || factor ==1) return;
-
-
             if(factor > 1)
             {
                 int factorInt = (int)(Math.Truncate(factor));
@@ -723,12 +591,10 @@ namespace ProjectA2S4
                 int width = imgMatrix.GetLength(1);//column
 
                 RGB[,] newMatrix = new RGB[height * factorInt, width * factorInt];
-
                 //change the size of the image in the header
                 this.height = height * factorInt;
                 this.width = width * factorInt;
                 
-
                 for (int i = 0; i < height; i++)//row
                 {
                     for (int j = 0; j < width; j++)//column
@@ -745,39 +611,37 @@ namespace ProjectA2S4
                     }
                     
                 }
-                /*
-                for (int i = 0; i < height*factorInt; i++)//row
-                {
-                    for (int j = 0; j < width; j++)//column
-                    {
-
-                        for(int l=0; l < factorInt; l++)
-                        {
-                            newMatrix[factorInt * i + ,factorInt * j + l] = imgMatrix[i, j];
-                        }
-                    }
-                }*/
-                
                 imgMatrix = newMatrix;
-
             }
-
         }
-
-        public void Retrecir(int coef)
+        /// <summary>
+        /// Réduit le nombre de pixels dans l'image par un facteur entier
+        /// </summary>
+        /// <param name="factor"></param>
+        public void Retrecir(int factor)
         {
-            
-            RGB[,] newMatrix = new RGB[imgMatrix.GetLength(0)/coef, imgMatrix.GetLength(1)/coef];
-            for(int i = 0; i < imgMatrix.GetLength(0) / coef; i++)
+            //change the size of the image in the header
+            int reminder = imgMatrix.GetLength(1) % 4;
+            this.height = imgMatrix.GetLength(0) / factor;
+            this.width = imgMatrix.GetLength(1) / factor + 4 - reminder;
+
+            RGB[,] newMatrix = new RGB[height, width];
+            for(int i = 0; i < height; i++)
             {
-                for( int j = 0; j < imgMatrix.GetLength(1) / coef; j++)
+                for(int j=0; j <width; j++)
                 {
-                    newMatrix[i, j] = imgMatrix[i*coef, j*coef];
+                    newMatrix[i, j] = new RGB(0, 0, 0);
                 }
             }
-            //change the size of the image in the header
-            this.height = imgMatrix.GetLength(0) / coef;
-            this.width = imgMatrix.GetLength(1) / coef;
+
+            for(int i = 0; i < imgMatrix.GetLength(0) / factor; i++)
+            {
+                for( int j = 0; j < imgMatrix.GetLength(1) / factor; j++)
+                {
+                    newMatrix[i, j] = imgMatrix[i*factor, j*factor];
+                }
+            }
+            
             imgMatrix = newMatrix;
         }
 
@@ -785,105 +649,166 @@ namespace ProjectA2S4
 
         #region Convolution
 
-        public void ConvolutionTry( int[,] mat33)
+        public void Indicatrice()
         {
-            if (mat33 != null && mat33.GetLength(0) == mat33.GetLength(1))
+            double[,] indicatrice = new double[3, 3] { { 0, 0, 0 }, { 0, 1, 0}, { 0, 0, 0} };
+
+            Convolution(indicatrice);
+        }
+        /// <summary>
+        /// Convolution : apparition des contours
+        /// </summary>
+        public void Contours()
+        {
+            double[,] matContours = new double[3, 3] { { -1, -1, -1 }, { -1, 8, -1 }, { -1, -1, -1 } };
+            GreyScale();
+            Convolution(matContours);
+        }
+        /// <summary>
+        /// Convolution : floutage de l'image
+        /// </summary>
+        public void Blur(double factor=1/9)
+        {
+            double[,] matBlur = new double[3, 3] { { factor, factor, factor }, { factor, factor, factor }, { factor, factor, factor } };
+
+            Convolution(matBlur);
+        }
+        /// <summary>
+        /// Convolution : affine les coutours pour améliorer la netteté
+        /// </summary>
+        public void Sharpen()
+        {
+            double[,] matSharp = new double[3, 3] { { 0, -1, 0 }, { -1, 5, -1 }, { 0, -1, 0 } };
+
+            Convolution(matSharp);
+        }
+        /// <summary>
+        /// Convolution pour noyau de taille 3 et 5
+        /// </summary>
+        /// <param name="kernel"></param>
+        public void Convolution(double[,] kernel)
+        {
+            RGB[,] output = new RGB[height, width];
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    int sumR = 0;
+                    int sumG = 0;
+                    int sumB = 0;
+                    int debutK = 0;
+                    int finK = 0;
+                    int decalage = 0;
+                    if (kernel.GetLength(0) == 3)
+                    {
+                        debutK = -1;
+                        finK = 1;
+                        decalage = 1;
+                    }
+                    else if (kernel.GetLength(0) == 5)
+                    {
+                        debutK = -2;
+                        finK = 2;
+                        decalage = 2;
+                    }
+                    for (int i2 = debutK; i2 <= finK; i2++)
+                    {
+                        for (int j2 = debutK; j2 <= finK; j2++)
+                        {
+                            int position_i = i + i2;
+                            int position_j = j + j2;
+                            if (position_i >= 0 && position_j >= 0 && position_i < height && position_j < width)
+                            {
+                                sumR += (int)(kernel[i2 + decalage, j2 + decalage] * imgMatrix[position_i, position_j].Red);
+                                sumG += (int)(kernel[i2 + decalage, j2 + decalage] * imgMatrix[position_i, position_j].Green);
+                                sumB += (int)(kernel[i2 + decalage, j2 + decalage] * imgMatrix[position_i, position_j].Blue);
+                            }
+                        }
+                    }
+
+                    if (i == 0 || i == height || j == width || j == 0)
+                    {
+                        sumR = 0;
+                        sumG = 0;
+                        sumB = 0;
+                    }
+
+                    sumR = Math.Max(0, Math.Min(255, sumR));
+                    sumG = Math.Max(0, Math.Min(255, sumG));
+                    sumB = Math.Max(0, Math.Min(255, sumB));
+
+                    output[i, j] = new RGB(sumR, sumG, sumB);
+                }
+            }
+            imgMatrix = output;
+        }
+        /// <summary>
+        /// Applique un filtre de convolution selon une matrice noyeau quelconque
+        /// </summary>
+        /// <param name="kernel"></param>
+        public void ConvolutionTry(int[,] kernel)
+        {
+            if (kernel != null && kernel.GetLength(0) == kernel.GetLength(1))
+            //matrice dim impaires /!\
             {
                 RGB[,] newMatrix = new RGB[height, width];
 
-                int kernelMiddleY = mat33.GetLength(0)/2;
-                int kernelMiddleX = mat33.GetLength(1)/2;
+                int kernelMiddleY = kernel.GetLength(0) / 2;
+                int kernelMiddleX = kernel.GetLength(1) / 2;
 
-                for(int imageY= 1; imageY < imgMatrix.GetLength(0) -1; imageY++)
+                for (int imageY = 1/*kernelMiddle*/; imageY < imgMatrix.GetLength(0) - 1; imageY++)
                 {
-                    for(int imageX = 1; imageX < imgMatrix.GetLength(1) -1; imageX++)
+                    for (int imageX = 1; imageX < imgMatrix.GetLength(1) - 1; imageX++)
                     {
                         int newR = 0;
                         int newG = 0;
                         int newB = 0;
 
-                        for (int matriceY = 0; matriceY < mat33.GetLength(0); matriceY++) 
+                        for (int kernelY = 0; kernelY < kernel.GetLength(0); kernelY++)
                         {
-                            for (int matriceX = 0; matriceX < mat33.GetLength(1); matriceX++)
+                            for (int kernelX = 0; kernelX < kernel.GetLength(1); kernelX++)
                             {
-                                int pos_dy = imageY + matriceY;
-                                int pos_dx = imageX + matriceX;
-
+                                /*
                                 pos_dx -= kernelMiddleX;
                                 pos_dy -= kernelMiddleY;
+                                */
 
-                                //sumR += mat33[matriceY, matriceX] * imgMatrix[imageY-1 + matriceY, imageX -1 + matriceX].Red;
-                                //sumG += mat33[matriceY, matriceX] * imgMatrix[imageY -1 + matriceY, imageX -1 + matriceX].Green;
-                                //sumB += mat33[matriceY, matriceX] * imgMatrix[imageY -1 + matriceY, imageX -1 + matriceX].Blue;
-                                
-                                float factor = mat33[matriceY, matriceX];
+                                int pos_dy = imageY + kernelY - 1;//-kernelmiddle
+                                int pos_dx = imageX + kernelX - 1;
+
+                                //sumR += kernel[matriceY, matriceX] * imgMatrix[imageY-1 + matriceY, imageX -1 + matriceX].Red;
+                                //sumG += kernel[matriceY, matriceX] * imgMatrix[imageY -1 + matriceY, imageX -1 + matriceX].Green;
+                                //sumB += kernel[matriceY, matriceX] * imgMatrix[imageY -1 + matriceY, imageX -1 + matriceX].Blue;
+
+                                float factor = kernel[kernelY, kernelX];
                                 RGB rgb = imgMatrix[pos_dy, pos_dx];
 
 
-                                newR += (int)(factor*rgb.Red);
-                                newG += (int)(factor*rgb.Green);
-                                newB += (int)(factor*rgb.Blue);
+                                newR += (int)(factor * rgb.Red);
+                                newG += (int)(factor * rgb.Green);
+                                newB += (int)(factor * rgb.Blue);
 
-                            } 
+                            }
                         }
 
                         //newR = Math.Min(0, Math.Max(255, newR));
                         //newG = Math.Min(0, Math.Max(255, newG));
                         //dnewB = Math.Min(0, Math.Max(255, newB));
 
-                        newMatrix[imageY, imageX] = new RGB(new byte[] { (byte)(newR), (byte)(newG), (byte)(newB) });
+                        newMatrix[imageY, imageX] = new RGB(newR, newG, newB);
 
                     }
                 }
-
                 imgMatrix = newMatrix;
-
             }
             else return;
-
-            /*
-            for (int filterY = 0; filterY < filter.Size; filterY++) {
-                int pk = (filterY + x - offset <= 0) ? 0 :
-                    (filterY + x - offset >= map.Width - 1) ? map.Width - 1 : filterY + x - offset;
-                for (int filterX = 0; filterX < filter.Size; filterX++) {
-                    int pl = (filterX + y - offset <= 0) ? 0 :
-                        (filterX + y - offset >= map.Height - 1) ? map.Height - 1 : filterX + y - offset;
-
-                    colorMap[filterY, filterX] = map.GetPixel(pk, pl);
-                }
-            }
-
-            result.SetPixel(x, y, colorMap * filter);
-            */
-
         }
-
-        public void Indicatrice()
-        {
-
-            int[,] matBlur = new int[3, 3] { { 0, 0, 0 }, { 0, 1, 0}, { 0, 0, 0} };
-
-            //Convolution(matBlur);
-        }
-        public void Contours()
-        {
-            int[,] matContours = new int[3, 3] { { -1, -1, -1 }, { -1, 8, -1 }, { -1, -1, -1 } };
-
-            imgMatrix = Produit_Matrice_Convolution(matContours, true);
-        }
-
-        public void Blur()
-        {
-            int[,] matBlur = new int[3, 3] { { 1 / 9, 1 / 9, 1 / 9 }, { 1 / 9, 1 / 9, 1 / 9 }, { 1 / 9, 1 / 9, 1 / 9 } }; 
-            
-            int[,] mat1 = new int[3, 3] { { 1, 1 ,1 }, { 1, 1, 1 }, { 1 , 1 , 1 } };
-
-            imgMatrix = Produit_Matrice_Convolution(mat1, true);
-
-            //ConvolutionKev(matBlur);
-
-        }
-
+        /// <summary>
+        /// autre testes de convolution
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="Noyau"></param>
+        /// <returns></returns>
         public static int[,] Convolution(int[,] image, int[,] Noyau)
         {
             int hauteur = image.GetLength(0);
@@ -897,10 +822,8 @@ namespace ProjectA2S4
                     result[i, j] = Somme(image, Noyau, i, j);
                 }
             }
-
             return result;
         }
-
         public static int Somme(int[,] matrice, int[,] noyau, int ligne, int colonne)
         {
             int somme = 0;
@@ -941,81 +864,90 @@ namespace ProjectA2S4
             return somme;
         }
 
-        public RGB[,] Produit_Matrice_Convolution(int[,] kernel, bool flou)
+        #endregion
+
+        #region Innovation
+        /// <summary>
+        /// applique un filtre flou sur un seul pixel
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns>nouveau pixel flouté</returns>
+        public static RGB ConvolutionPixel(RGB[,] matrix, int i, int j)
         {
-            int hauteur = imgMatrix.GetLength(0);
-            int largeur = imgMatrix.GetLength(1);   // on créer des variables pour la hauteur et 
-            RGB[,] output = new RGB[hauteur, largeur];    //la matrice de sortie est de la même taille que celle d'entrée
-            for (int i = 0; i < hauteur; i++)
+            RGB newPixel = new RGB(0, 0, 0);
+            int[,] matBlur = new int[,] { { 1 / 9, 1 / 9, 1 / 9 }, { 1 / 9, 1 / 9, 1 / 9 }, { 1 / 9, 1 / 9, 1 / 9 } };
+            double productR = 0;
+            double productG = 0;
+            double productB = 0;
+
+            if (i > 1 && j > 1 && i < matrix.GetLength(0) - 1 && j < matrix.GetLength(1) - 1)
             {
-                for (int j = 0; j < largeur; j++) //on parcours les emplacements, auquelles seront affectés les valeurs à output
+                for (int k = -1; k <= 1; k++)
                 {
-                    int sommeR = 0;  //on applique le kernel pour chaque position, on réinitialise donc la somme à chaque fois
-                    int sommeG = 0;
-                    int sommeB = 0; //on applique kernel pour chaque couleur
-
-                    int positionKerneli = 0;
-                    int positionKernelj = 0;
-                    int debutK = 0;
-                    int finK = 0;
-                    int decalage = 0;
-                    if (kernel.GetLength(0) == 3)   //selon la taille du kernel, le milieu ne sera pas identique
+                    for (int l = -1; l <= 1; l++)
                     {
-                        debutK = -1;
-                        finK = 1;
-                        decalage = 1;
+                        int red = matrix[i + k, j + l].Red;
+                        int green = matrix[i + k, j + l].Green;
+                        int blue = matrix[i + k, j + l].Blue;
+                        productR += red / 9;
+                        productG += green / 9;
+                        productB += blue / 9;
                     }
-                    else if (kernel.GetLength(0) == 5)
-                    {
-                        debutK = -2;
-                        finK = 2;
-                        decalage = 2;
-                    }
-                    for (int i2 = debutK; i2 <= finK; i2++)
-                    {
-                        for (int j2 = debutK; j2 <= finK; j2++)   //on parcours la matrice autour de l'emplacement, auquel on applique la matrice Kernel
-                        {
-                            int position_i = i + i2;
-                            int position_j = j + j2;
-                            if (position_i >= 0 && position_j >= 0 && position_i < hauteur && position_j < largeur)
-                            {
-                                sommeR += kernel[i2 + decalage, j2 + decalage] * imgMatrix[position_i, position_j].Red;
-                                sommeG += kernel[i2 + decalage, j2 + decalage] * imgMatrix[position_i, position_j].Green;
-                                sommeB += kernel[i2 + decalage, j2 + decalage] * imgMatrix[position_i, position_j].Blue;
-                            }
-                        }
-                    }
-
-                    if (i == 0 && i == hauteur && j == largeur || j == 0)    //cas sur les bords qu'on ne peut pas traiter avec kernel
-                    {
-                        sommeR = 0;
-                        sommeG = 0;
-                        sommeB = 0;
-                    }
-                            if (flou)
-                    {
-                        sommeR /= 9;
-                        sommeG /= 9;
-                        sommeB /= 9;
-                    }
-
-                    if (sommeR < 0) sommeR = 1;
-                    if (sommeG < 0) sommeG = 1;
-                    if (sommeB < 0) sommeB = 1;
-                    if (sommeR > 255) sommeR = 254;
-                    if (sommeG > 255) sommeG = 254;
-                    if (sommeB > 255) sommeB = 254;
-                    output[i, j] = new RGB((byte)sommeR, (byte)sommeG, (byte)sommeB);
-
                 }
             }
-            return output;
+            newPixel = new RGB(productR, productG, productB);
+            return newPixel;
+        }
+        /// <summary>
+        /// applique un filtre flou seulement sur un partie de l'image à partir de mots de code
+        /// </summary>
+        /// <param name="input"></param>
+        public void BlurZone(string input)
+        {
+            RGB[,] newrgb = new RGB[height, width];
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    newrgb[i, j] = imgMatrix[i, j];
+                }
+            }
+            if (input.Contains("portrait"))
+            {
+                MyImage portrait = new MyImage(pathFolder + "portrait.bmp");
+                int factor = height / portrait.Height;
+                portrait.Agrandissement(factor);
+                int maringLeft = (width-portrait.Width)/2 ;
+
+                for (int i = 0; i < imgMatrix.GetLength(0); i++)
+                {
+                    for (int j = 0; j < imgMatrix.GetLength(1); j++)
+                    {
+                        if (i < portrait.Height && j < portrait.Width)
+                        {
+                            if (portrait.imgMatrix[i, j].Equal(0, 0, 0))
+                            {
+                                newrgb[i, j] = ConvolutionPixel(imgMatrix, i, j);
+                            }
+                        }
+                        else newrgb[i, j] = ConvolutionPixel(imgMatrix, i, j);
+                    }
+                }
+            }
+            if(input.Contains("line"))
+            imgMatrix = newrgb;
         }
 
-#endregion
+        #endregion
 
         #region Création d'image
 
+        /// <summary>
+        /// retourne un tableau de pourcentage du nombre de pixels selon les valeurs rouge 
+        /// </summary>
+        /// <returns></returns>
         public double[] NumberOfRed()
         {
             double[] reds = new double[256];
@@ -1036,6 +968,10 @@ namespace ProjectA2S4
             }
             return reds;
         }
+        /// <summary>
+        /// retourne un tableau de pourcentage du nombre de pixels selon les valeurs vert
+        /// </summary>
+        /// <returns></returns>
         public double[] NumberOfGreen()
         {
             double[] green = new double[256];
@@ -1056,6 +992,10 @@ namespace ProjectA2S4
             }
             return green;
         }
+        /// <summary>
+        /// retourne un tableau de pourcentage du nombre de pixels selon les valeurs blue
+        /// </summary>
+        /// <returns></returns>
         public double[] NumberOfBlue()
         {
             double[] reds = new double[256];
@@ -1076,7 +1016,9 @@ namespace ProjectA2S4
             }
             return reds;
         }
-
+        /// <summary>
+        /// Transforme l'image en histogramme de couleur 
+        /// </summary>
         public void Histogram()//input image different than output image(histogram)
         {
             RGB[,] histo = new RGB[256,256];
@@ -1123,7 +1065,9 @@ namespace ProjectA2S4
             width = histo.GetLength(1);
             imgMatrix = histo;
         }
-
+        /// <summary>
+        /// Transforme l'image en histogramme des moyennes des couleurs
+        /// </summary>
         public void HistogramLuminosity()//input image different than output image(histogram)
         {
             RGB[,] histo = new RGB[256, 256];
@@ -1166,7 +1110,9 @@ namespace ProjectA2S4
             width = histo.GetLength(1);
             imgMatrix = histo;
         }
-
+        /// <summary>
+        /// Dessine un fractale de Mandelbrot
+        /// </summary>
         public void Mandelbrot()
         {
             RGB[,] mandel = new RGB[256, 256];
@@ -1233,13 +1179,6 @@ namespace ProjectA2S4
                     for(int j=0; j<this.width; j++)
                     {
 
-                        string Rnew = "";
-                        string Gnew = "";
-                        string Bnew = "";
-
-                        byte R1 = imgMatrix[i,j].Red;
-                        byte G1 = imgMatrix[i,j].Green;
-                        byte B1 = imgMatrix[i,j].Blue;
 
                         
                     }
@@ -1254,7 +1193,10 @@ namespace ProjectA2S4
         #endregion
 
         #region QRCode
-
+        /// <summary>
+        /// Remplie les données du QR code dans une image de pixel noir et blanc
+        /// </summary>
+        /// <param name="dataMatrix"></param>
         public void QRModif(int[,] dataMatrix)
         {
 
@@ -1273,6 +1215,10 @@ namespace ProjectA2S4
                 }
             }
         }
+        /// <summary>
+        /// Remplie les données du QR code dans une image de pixel avec des zones de couleur
+        /// </summary>
+        /// <param name="dataMatrix"></param>
         public void QRModifColor(int[,] dataMatrix)
         {
 
@@ -1313,10 +1259,13 @@ namespace ProjectA2S4
                 }
             }
         }
-
+        /// <summary>
+        /// Applique un masque (i+j)%2 au données du QR code
+        /// </summary>
+        /// <param name="dataMatrix"></param>
+        /// <returns></returns>
         public int[,] Masking(int[,] dataMatrix)
         {
-
             for (int i = 0; i < dataMatrix.GetLength(0) -1  ; i++)
             {
                 for (int j = 0; j < dataMatrix.GetLength(1) -1 ; j++)
@@ -1333,10 +1282,13 @@ namespace ProjectA2S4
                     }
                 }
             }
-
             return dataMatrix;
         }
-
+        /// <summary>
+        /// Inverse les valeurs binaire
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static int ToggleBit(int value)
         {
 

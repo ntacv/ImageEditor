@@ -11,8 +11,7 @@ namespace ProjectA2S4
 
 
         #region Properties
-        string path;
-        string pathOutput;
+        string path = "../../../Files/Img/";
         int[] mode;
         int correction;
         int maxByte;
@@ -24,8 +23,6 @@ namespace ProjectA2S4
         RGB[,] img;
         int[,] data;
         int[] textByte;
-        int[] txt;
-
 
 
         int[] motif1 = new int[49];
@@ -42,13 +39,14 @@ namespace ProjectA2S4
             get { return correction; }
         }
         #endregion
-
-        public QRCode(string inputText, string path)
+        /// <summary>
+        /// Define and create a QR code based on the input text
+        /// </summary>
+        /// <param name="inputText"></param>
+        public QRCode(string inputText)
         {
-            this.correction = 7;
-            this.path = path;
-            this.pathOutput = path;
-
+            this.correction = 7;//percent
+            
             if (!ProgramImage.Alphanumeric(inputText))
             {
                 return;
@@ -56,7 +54,6 @@ namespace ProjectA2S4
             else
             {
                 this.inputText = inputText.ToUpper();
-                this.correction = 7;//percentage
                 parameters = new int[15] { 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0 };
                 //0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0
                 //1,1,1,0,1,1,1,1,1,0,0,0,1,0,0
@@ -65,7 +62,6 @@ namespace ProjectA2S4
                 //motif1 = strToIntArr(motif1str);
                 
                 //textByte = RandomData();
-
 
                 if (inputText.Length > 47) return;
                 if(inputText.Length < 25){
@@ -92,19 +88,18 @@ namespace ProjectA2S4
                 data = qr.Masking(data);
 
                 qr.QRModif(data);
-                qr.Agrandissement(30);
-                qr.From_Image_To_File(pathOutput+"qrOutput.bmp");
+                qr.Agrandissement(20);
+                qr.From_Image_To_File("QRcode.bmp");
             }
-
-
-
         }
 
+        #region Functions
+        /// <summary>
+        /// Fill the data matrix from the input template
+        /// </summary>
         public void FileToData()
         {
             int index = 0;
-
-
             for (int i = 0; i < data.GetLength(0); i++)
             {
                 for (int j = 0; j < data.GetLength(1); j++)
@@ -117,22 +112,12 @@ namespace ProjectA2S4
                     else data[i, j] = 0;
                 }
             }
-
         }
-
-        public static bool isAlpha(string str)
-        {
-            if (str == null || str.Length == 0) return false;
-            else {
-                for (int i = 0; i < str.Length; i++) {
-                    //if (str[i])
-                    {
-                        return false;
-                    }
-                }
-            }
-            return false;
-        }
+        /// <summary>
+        /// string binary to int array
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static int[] strToIntArr(string value)
         {
             int size = value.Length;
@@ -146,9 +131,12 @@ namespace ProjectA2S4
                     arr[i] = valint;
                 }
             }
-            
             return arr;
         }
+        /// <summary>
+        /// generate random 0s and 1s to test the qr code formatting
+        /// </summary>
+        /// <returns></returns>
         public int[] RandomData()
         {
             textByte = new int[500];
@@ -164,7 +152,9 @@ namespace ProjectA2S4
             }
             return textByte;
         }
-        
+        /// <summary>
+        /// fill the qr code parameter bits
+        /// </summary>
         public void Parameters()
         {
 
@@ -222,7 +212,9 @@ namespace ProjectA2S4
             */
 
         }
-
+        /// <summary>
+        /// generate the binary bits from the input text
+        /// </summary>
         public void DataFormating()
         {
 
@@ -306,7 +298,9 @@ namespace ProjectA2S4
             //printIntArray(textByte);
 
         }
-
+        /// <summary>
+        /// Fill the qr code with the data
+        /// </summary>
         public void WriteText()
         {
             //data order : mode(4)length(9)text(8* )end(4)more(0-4)completers(8-16)EC(7*8)
@@ -356,8 +350,9 @@ namespace ProjectA2S4
                 
             }
         }
-
-
+        /// <summary>
+        /// console print the qr code to debug
+        /// </summary>
         public void printMatrix()
         {
             Console.Clear();
@@ -386,6 +381,10 @@ namespace ProjectA2S4
             Console.WriteLine();
             Thread.Sleep(100);
         }
+        /// <summary>
+        /// console print int arrays to debug
+        /// </summary>
+        /// <param name="arr"></param>
         public void printArray(int[] arr)
         {
             //Console.Clear();
@@ -409,6 +408,6 @@ namespace ProjectA2S4
             }
 
         }
-
+        #endregion
     }
 }

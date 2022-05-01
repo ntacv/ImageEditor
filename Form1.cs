@@ -79,7 +79,8 @@ namespace WinFormsApp1
             string input = textBox1.Text;
             if (input.Length < 25)
             {
-                QRCode qrCode = new QRCode(input, pathQr);
+                //pathQr = "../../../Files/Img/";
+                QRCode qrCode = new QRCode(input);
                 pictureBox2.ImageLocation = output;
             }
             else label3.Text = "Input text is too long"; 
@@ -111,7 +112,7 @@ namespace WinFormsApp1
 
         private void openImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MyImage.OpenImage(output);
+            MyImage.OpenFile(output);
         }
 
         private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -121,7 +122,7 @@ namespace WinFormsApp1
 
             if (textBox2.Text.Length > 0)
             {
-                image.Rotation(ProgramImage.strInputToDouble(textBox2.Text));
+                image.Rotate(ProgramImage.strInputToDouble(textBox2.Text));
                 image.From_Image_To_File(output);
                 pictureBox1.ImageLocation = output;
             }
@@ -154,7 +155,7 @@ namespace WinFormsApp1
 
         private void xAxisToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            image.Miroir();
+            image.Mirror();
             image.From_Image_To_File(output);
             pictureBox1.ImageLocation = output;
         }
@@ -217,6 +218,13 @@ namespace WinFormsApp1
                 image.From_Image_To_File(output);
                 pictureBox1.ImageLocation = output;
             }
+        }
+
+        private void luminosityToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            image.HistogramLuminosity();
+            image.From_Image_To_File(output);
+            pictureBox1.ImageLocation = output;
         }
     }
 }

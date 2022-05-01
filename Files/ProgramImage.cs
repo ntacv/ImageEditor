@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using System;
+﻿using System;
 using System.IO;
 using System.Threading;
 using System.Media;
@@ -14,49 +12,28 @@ namespace ProjectA2S4
 {
     public class ProgramImage
     {
-        //static void Main(string[] args)
-        public static void Start()
+        
+        //static void (string[] args)
+        static void Start()
         {
-            string path = "../../../Files/Img/";
+            string path = "../../../Files/";
 
-
-            //MyImage qr = new MyImage(path + "qrCode1.bmp");
-
-            //qr.From_Image_To_File(path+"qrOutput.bmp");
-
-            //MyImage flag = new MyImage(path+"flag.bmp");
-            //flag.From_Image_To_File(path+"Output.bmp");
-
-
-            MyImage nwh = new MyImage(path + "NoWayHome.bmp");
-
-            nwh.GreyScale();
-            nwh.From_Image_To_File(path+"GreyScale.bmp");
-
-            int[] val = strToInt("00010001");
-            //Console.WriteLine(MyImage.Convertir_Binary_To_Double(val));
-
-            string txt = "nathan is a godddddddddd";
-            MessageBox.Show(txt);
-
-
-            if (Alphanumeric(txt))
-            {
-                //QRCode link = new QRCode(txt);
-            }
+            //MyImage nwh = new MyImage(path + "NoWayHome.bmp");
             
+            //nwh.From_Image_To_File("Output.bmp", true);
 
+            string txt = "hello world";
+            
+            //QRCode link = new QRCode(txt);
+            
+            
+            /* useful tips
             var array = new int[] { 1, 2, 3, 4, 5 };
             var slice1 = array[2..4];    // array[new Range(2, new Index(3, fromEnd: true))]
             var slice2 = array[..^3];     // array[Range.EndAt(new Index(3, fromEnd: true))]
             var slice3 = array[2..];      // array[Range.StartAt(2)]
             var slice4 = array[..];       // array[Range.All]
-
-
-            //MyImage track = new MyImage(path + "trackLine.bmp");
-
-            //RacingLine racing = new RacingLine(track.ImgMatrix);
-
+            */
         }
 
         #region Functions
@@ -76,7 +53,12 @@ namespace ProjectA2S4
 
             return sum;
         }
-
+        /// <summary>
+        /// ajoute des espaces devant un string
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="length">le nombre de char après l'ajout d'espace</param>
+        /// <returns></returns>
         public static string AlignString(string str, int length)
         {
             if (str != null)
@@ -89,6 +71,11 @@ namespace ProjectA2S4
             else str = "";
             return str;
         }
+        /// <summary>
+        /// permet d'afficher un tableau dans la console
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static string ArrayToString(int[] arr)
         {
             if (arr == null) return "";
@@ -96,6 +83,11 @@ namespace ProjectA2S4
             for (int i = 0; i < arr.Length; i++) str += arr[i] + " ";
             return str;
         }
+        /// <summary>
+        /// tableau de byte vers string pour affichage console
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
         public static string ByteToString(byte[] arr)
         {
             if (arr == null) return "";
@@ -103,7 +95,12 @@ namespace ProjectA2S4
             for (int i = 0; i < arr.Length; i++) str += arr[i] + " ";
             return str;
         }
-
+        /// <summary>
+        /// multiplication matricielle à valeures double
+        /// </summary>
+        /// <param name="mat1"></param>
+        /// <param name="mat2"></param>
+        /// <returns>la matrice produit</returns>
         public static double[,] matrixMult(double[,] mat1, double[,] mat2)
         {
             if(mat1 == null || mat2 == null || mat1.GetLength(0)!=mat2.GetLength(1)) return null;
@@ -123,7 +120,11 @@ namespace ProjectA2S4
             }
             return result;
         }
-
+        /// <summary>
+        /// convertion d'un angle, de degrée à radian
+        /// </summary>
+        /// <param name="degre"></param>
+        /// <returns></returns>
         public static double ToRadian(double degre)
         {
             double radian = 0;
@@ -136,7 +137,11 @@ namespace ProjectA2S4
             }
             return radian;
         }
-
+        /// <summary>
+        /// simplifie l'écriture d'une taille de fichier en octet
+        /// </summary>
+        /// <param name="size">taille du fichier</param>
+        /// <returns></returns>
         public static string ShortSize(int size)
         {
             string str = "";
@@ -169,7 +174,11 @@ namespace ProjectA2S4
             }
             return str;
         }
-
+        /// <summary>
+        /// détermine le maximum d'un tableau de double
+        /// </summary>
+        /// <param name="tab"></param>
+        /// <returns></returns>
         public static double Max(double[] tab)
         {
             double max = 0;
@@ -180,7 +189,11 @@ namespace ProjectA2S4
             return max;
         }
 
-
+        /// <summary>
+        /// return true si tous les char sont alphanumériques
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <returns></returns>
         public static bool Alphanumeric(string txt)
         {
             //bool fullAlph = true;
@@ -202,54 +215,70 @@ namespace ProjectA2S4
 
         }
 
-
-        //Code Alphanumerique
-        //0 -> 0 … 9->9 
-        //A -> 10 … Z ->35 
-        //Espace -> 36 
-        //$ -> 37, % -> 38, *-> 39, + ->40, - -> 41, . -> 42, / -> 43, : -> 44
-
+        /// <summary>
+        /// Code Alphanumerique
+        /// 0 -> 0 … 9->9 
+        /// A -> 10 … Z ->35 
+        /// Espace -> 36 
+        /// $ -> 37, % -> 38, *-> 39, + ->40, - -> 41, . -> 42, / -> 43, : -> 44
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns>les valeurs alphanumériques d'un string</returns>
         public static int[] alphaToInt(string str)
         {
             str = str.ToUpper();
             int[] result = new int[str.Length];
-
+            
             for(int i = 0; i < str.Length; i++)
             {
-                if(str[i]-'0' <10 && str[i] - '0' >= 0)
+                if (Alphanumeric(""+str[i]))
                 {
-                    result[i] = str[i] - '0'; 
-                }
-                if(str[i]-'A' <=35 && str[i] - 'A' >= 0)
-                {
-                    result[i] = str[i] - 'A' + 10;
-                }
-                if (str[i] == ' ') result[i] = 36;
-                switch (str[i])
-                {
-                    case '$':
-                        result[i] = 37;
-                        break;
-                    case '%':result[i] = 38;
-                        break;
-                    case '*': result[i] = 39;
-                        break;
-                    case '+': result[i] = 40;
-                        break;
-                    case '-': result[i] = 41;
-                        break;
-                    case '.': result[i] = 42;
-                        break;
-                    case '/': result[i] = 43;
-                        break;
-                    case ':': result[i] = 44;
-                        break;
+                    if (str[i] - '0' < 10 && str[i] - '0' >= 0)
+                    {
+                        result[i] = str[i] - '0';
+                    }
+                    if (str[i] - 'A' <= 35 && str[i] - 'A' >= 0)
+                    {
+                        result[i] = str[i] - 'A' + 10;
+                    }
+                    if (str[i] == ' ') result[i] = 36;
+                    switch (str[i])
+                    {
+                        case '$':
+                            result[i] = 37;
+                            break;
+                        case '%':
+                            result[i] = 38;
+                            break;
+                        case '*':
+                            result[i] = 39;
+                            break;
+                        case '+':
+                            result[i] = 40;
+                            break;
+                        case '-':
+                            result[i] = 41;
+                            break;
+                        case '.':
+                            result[i] = 42;
+                            break;
+                        case '/':
+                            result[i] = 43;
+                            break;
+                        case ':':
+                            result[i] = 44;
+                            break;
+                    }
                 }
             }
 
             return result;
         }
-
+        /// <summary>
+        /// convertion valeur numérique vers 11 bits
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static int[] intArrToBinary11(int[] input)
         {
             int[] result;
@@ -308,64 +337,11 @@ namespace ProjectA2S4
 
             return binaries;
         }
-        public static int[] intArrToBinary8(int[] input)
-        {
-            int[] result;
-            //int indexBinary = 0;
-            int[] binaries;
-            int Length = 0;
-
-            if (input.Length % 2 == 0)
-            {
-                Length = input.Length / 2;
-                binaries = new int[Length * 8];
-            }
-            else
-            {
-                Length = input.Length / 2 + 1;
-                binaries = new int[Length * 8 +8];
-            }
-
-            result = new int[Length];
-
-            for (int i = 0; i < input.Length / 2; i++)
-            {
-                //HE = 45 ^ 1 * 17 + 45 ^ 0 * 14 = 779-> 01100001011
-                result[i] = input[2 * i] * 45 + input[2 * i + 1];
-
-            }
-            if (input.Length % 2 == 1)
-            {
-                result[result.Length - 1] = input[input.Length - 1];
-            }
-
-            for (int i = 0; i < input.Length / 2; i++)
-            {
-                string binaryInt = Convert.ToString(result[i], 2);
-                while (binaryInt.Length < 11)
-                {
-                    binaryInt = "0" + binaryInt;
-                }
-                for (int j = 0; j < 11; j++)
-                {
-                    binaries[11 * i + j] = Convert.ToInt32(binaryInt[j] - 48);
-                }
-            }
-            if (input.Length % 2 == 1)
-            {
-                string binaryInt = Convert.ToString(result[result.Length - 1], 2);
-                while (binaryInt.Length < 6)
-                {
-                    binaryInt = "0" + binaryInt;
-                }
-                for (int j = 0; j < 6; j++)
-                {
-                    binaries[(result.Length - 1) * 11 + j] = Convert.ToInt32(binaryInt[j] - 48);
-                }
-            }
-
-            return binaries;
-        }
+        /// <summary>
+        /// convertion valeur numérique vers 8 bits
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static int[] _intArrToBinary8(int[] textByte)
         {
             int[] binaries = new int[textByte.Length*8];
@@ -382,6 +358,11 @@ namespace ProjectA2S4
             }
             return binaries;
         }
+        /// <summary>
+        /// convertion valeur binaire 8bits vers valeur numérique
+        /// </summary>
+        /// <param name="binaries"></param>
+        /// <returns></returns>
         public static int[] binary8ToInt(int[] binaries)
         {
             int[] textbyte = new int[binaries.Length / 8];
@@ -394,7 +375,12 @@ namespace ProjectA2S4
             }
             return textbyte;
         }
-
+        /// <summary>
+        /// convertion valeur numérique vers binaire avec des 0s devant selon la taille demandée
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
         public static int[] intToBinary(int input, int size)
         {
             int[] result = new int[size];
@@ -409,7 +395,11 @@ namespace ProjectA2S4
             }
             return result;
         }
-
+        /// <summary>
+        /// convertit un string de 0 et 1 en un tableau de int
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <returns></returns>
         public static int[] strToInt(string txt)
         {
             int[] result = new int[txt.Length];
@@ -419,18 +409,22 @@ namespace ProjectA2S4
             }
             return result;
         }
-
         public static double strInputToDouble(string input)
         {
-            double result = 0; 
+            double result = 0;
             if (input == null) return result;
-            if(input.Length > 0)
+            if (input.Length > 0)
             {
                 result = Convert.ToDouble(input);
             }
             return result;
         }
-
+        /// <summary>
+        /// combine deux int array dans l'ordre des parametres
+        /// </summary>
+        /// <param name="arr1"></param>
+        /// <param name="arr2"></param>
+        /// <returns></returns>
         public static int[] intArrFusion(int[] arr1, int[] arr2)
         {
             int[] result = new int[arr1.Length+arr2.Length];
@@ -444,7 +438,11 @@ namespace ProjectA2S4
             }
             return result;
         }
-
+        /// <summary>
+        /// conversion tableau byte vers tableau int
+        /// </summary>
+        /// <param name="byteInput"></param>
+        /// <returns></returns>
         public static int[] byteToInt(byte[] byteInput)
         {
             //not all 01s
@@ -457,11 +455,16 @@ namespace ProjectA2S4
             return result;
         }
 
+
+
         #endregion
 
-
-        #region Error code
-
+        #region QRCode
+        /// <summary>
+        /// utilise l'algorithme ReedSolomon pour retourner des valeurs de correction d'erreur
+        /// </summary>
+        /// <param name="inputText"></param>
+        /// <returns></returns>
         public static int[] EC(string inputText)
         {
             Encoding u8 = Encoding.UTF8;
@@ -488,39 +491,37 @@ namespace ProjectA2S4
             }
             return resultInt;
         }
-        public static int[] ECbits(int[] inputText)
+        /// <summary>
+        /// utilise l'algorithme ReedSolomon pour retourner des valeurs de correction d'erreur
+        /// </summary>
+        /// <param name="inputText"></param>
+        /// <returns></returns>
+        public static int[] ECbits(int[] inputText, int size=7)
         {
             Encoding u8 = Encoding.UTF8;
-
-            //string a = "HELLO WORD AND ALL";
-            //int iBC = u8.GetByteCount(a);
-            //byte[] bytes = u8.GetBytes(inputText);
-            //string b = "HELIO WORX AND OLL";
-            //byte[] bytesb = u8.GetBytes(b);
-            //byte[] result = ReedSolomonAlgorithm.Encode(bytesa, 7);
             inputText = binary8ToInt(inputText);
-
+            int[] resultInt = null;
             byte[] bitsArr = new byte[inputText.Length];
             for(int j=0; j < bitsArr.Length; j++)
             {
                 bitsArr[j] = (byte)(inputText[j]);
             }
-
-            //Privilégiez l'écriture suivante car par défaut le type choisi est DataMatrix 
-            byte[] result = ReedSolomonAlgorithm.Encode(bitsArr, 7, ErrorCorrectionCodeType.QRCode);
-            //byte[] result1 = ReedSolomonAlgorithm.Decode(bytesb, result, ErrorCorrectionCodeType.QRCode);
-
-
-            int[] resultInt = new int[result.Length];
-            resultInt = byteToInt(result);
-
-            for (int i = 0; i < resultInt.Length; i++)
+            if (size > 0)
             {
-                //Console.WriteLine(resultInt[i]);
+                //Privilégiez l'écriture suivante car par défaut le type choisi est DataMatrix 
+                byte[] result = ReedSolomonAlgorithm.Encode(bitsArr, size, ErrorCorrectionCodeType.QRCode);
+
+                resultInt = new int[result.Length];
+                resultInt = byteToInt(result);
             }
             return resultInt;
         }
-
+        /// <summary>
+        /// compare deux tableau de bits
+        /// </summary>
+        /// <param name="binary1"></param>
+        /// <param name="binary2"></param>
+        /// <returns></returns>
         public static string BinaryEqual(int[] binary1, int[] binary2)
         {
             string result = "not the same";
@@ -538,8 +539,6 @@ namespace ProjectA2S4
             }
             return result;
         }
-
         #endregion
-
     }
 }
