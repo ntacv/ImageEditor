@@ -40,17 +40,26 @@
             this.mirrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xAxisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yAxisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aggrandirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomInRéduirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contourDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blurFlouToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.contourDetectionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sharpenNetteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageCreationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.histogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.luminosityToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.fractalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelChooseBtn = new System.Windows.Forms.Panel();
             this.lenaBtn = new System.Windows.Forms.Button();
             this.spiderBtn = new System.Windows.Forms.Button();
@@ -61,7 +70,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.bringInput2 = new System.Windows.Forms.Button();
             this.bringChoose = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -71,14 +79,14 @@
             this.button7 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.luminosityToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelChooseBtn.SuspendLayout();
             this.panelInputText.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -97,7 +105,7 @@
             this.openImageToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(186, 716);
+            this.menuStrip1.Size = new System.Drawing.Size(155, 716);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -105,7 +113,7 @@
             // 
             this.chooseImageToolStripMenuItem.Name = "chooseImageToolStripMenuItem";
             this.chooseImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.chooseImageToolStripMenuItem.Size = new System.Drawing.Size(173, 29);
+            this.chooseImageToolStripMenuItem.Size = new System.Drawing.Size(142, 29);
             this.chooseImageToolStripMenuItem.Text = "Choose Image";
             this.chooseImageToolStripMenuItem.Click += new System.EventHandler(this.chooseImageToolStripMenuItem_Click);
             // 
@@ -117,7 +125,7 @@
             this.negatifToolStripMenuItem,
             this.blurFlouToolStripMenuItem});
             this.effectsToolStripMenuItem.Name = "effectsToolStripMenuItem";
-            this.effectsToolStripMenuItem.Size = new System.Drawing.Size(173, 29);
+            this.effectsToolStripMenuItem.Size = new System.Drawing.Size(142, 29);
             this.effectsToolStripMenuItem.Text = "Effects";
             // 
             // toolStripMenuItem1
@@ -153,11 +161,13 @@
             this.imageEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.luminosityToolStripMenuItem,
             this.mirrorToolStripMenuItem,
-            this.rotationToolStripMenuItem,
             this.aggrandirToolStripMenuItem,
-            this.zoomInRéduirToolStripMenuItem});
+            this.zoomInRéduirToolStripMenuItem,
+            this.rotationToolStripMenuItem,
+            this.shearToolStripMenuItem,
+            this.contourDetectionToolStripMenuItem});
             this.imageEditorToolStripMenuItem.Name = "imageEditorToolStripMenuItem";
-            this.imageEditorToolStripMenuItem.Size = new System.Drawing.Size(173, 29);
+            this.imageEditorToolStripMenuItem.Size = new System.Drawing.Size(142, 29);
             this.imageEditorToolStripMenuItem.Text = "Image Editor";
             this.imageEditorToolStripMenuItem.Click += new System.EventHandler(this.imageEditorToolStripMenuItem_Click);
             // 
@@ -189,13 +199,7 @@
             this.yAxisToolStripMenuItem.Name = "yAxisToolStripMenuItem";
             this.yAxisToolStripMenuItem.Size = new System.Drawing.Size(159, 34);
             this.yAxisToolStripMenuItem.Text = "Y axis";
-            // 
-            // rotationToolStripMenuItem
-            // 
-            this.rotationToolStripMenuItem.Name = "rotationToolStripMenuItem";
-            this.rotationToolStripMenuItem.Size = new System.Drawing.Size(278, 34);
-            this.rotationToolStripMenuItem.Text = "Rotation";
-            this.rotationToolStripMenuItem.Click += new System.EventHandler(this.rotationToolStripMenuItem_Click);
+            this.yAxisToolStripMenuItem.Click += new System.EventHandler(this.yAxisToolStripMenuItem_Click);
             // 
             // aggrandirToolStripMenuItem
             // 
@@ -211,29 +215,90 @@
             this.zoomInRéduirToolStripMenuItem.Text = "ZoomIn / Réduir";
             this.zoomInRéduirToolStripMenuItem.Click += new System.EventHandler(this.zoomInRéduirToolStripMenuItem_Click);
             // 
+            // rotationToolStripMenuItem
+            // 
+            this.rotationToolStripMenuItem.Name = "rotationToolStripMenuItem";
+            this.rotationToolStripMenuItem.Size = new System.Drawing.Size(278, 34);
+            this.rotationToolStripMenuItem.Text = "Rotation";
+            this.rotationToolStripMenuItem.Click += new System.EventHandler(this.rotationToolStripMenuItem_Click);
+            // 
+            // shearToolStripMenuItem
+            // 
+            this.shearToolStripMenuItem.Name = "shearToolStripMenuItem";
+            this.shearToolStripMenuItem.Size = new System.Drawing.Size(278, 34);
+            this.shearToolStripMenuItem.Text = "Shear / Cisaillement";
+            this.shearToolStripMenuItem.Click += new System.EventHandler(this.shearToolStripMenuItem_Click);
+            // 
+            // contourDetectionToolStripMenuItem
+            // 
+            this.contourDetectionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.blurFlouToolStripMenuItem1,
+            this.contourDetectionToolStripMenuItem1,
+            this.sharpenNetteToolStripMenuItem});
+            this.contourDetectionToolStripMenuItem.Name = "contourDetectionToolStripMenuItem";
+            this.contourDetectionToolStripMenuItem.Size = new System.Drawing.Size(278, 34);
+            this.contourDetectionToolStripMenuItem.Text = "Convolution";
+            this.contourDetectionToolStripMenuItem.Click += new System.EventHandler(this.contourDetectionToolStripMenuItem_Click);
+            // 
+            // blurFlouToolStripMenuItem1
+            // 
+            this.blurFlouToolStripMenuItem1.Name = "blurFlouToolStripMenuItem1";
+            this.blurFlouToolStripMenuItem1.Size = new System.Drawing.Size(258, 34);
+            this.blurFlouToolStripMenuItem1.Text = "Blur / Flou";
+            this.blurFlouToolStripMenuItem1.Click += new System.EventHandler(this.blurFlouToolStripMenuItem1_Click);
+            // 
+            // contourDetectionToolStripMenuItem1
+            // 
+            this.contourDetectionToolStripMenuItem1.Name = "contourDetectionToolStripMenuItem1";
+            this.contourDetectionToolStripMenuItem1.Size = new System.Drawing.Size(258, 34);
+            this.contourDetectionToolStripMenuItem1.Text = "Contour detection";
+            this.contourDetectionToolStripMenuItem1.Click += new System.EventHandler(this.contourDetectionToolStripMenuItem1_Click);
+            // 
+            // sharpenNetteToolStripMenuItem
+            // 
+            this.sharpenNetteToolStripMenuItem.Name = "sharpenNetteToolStripMenuItem";
+            this.sharpenNetteToolStripMenuItem.Size = new System.Drawing.Size(258, 34);
+            this.sharpenNetteToolStripMenuItem.Text = "Sharpen / Nette";
+            this.sharpenNetteToolStripMenuItem.Click += new System.EventHandler(this.sharpenNetteToolStripMenuItem_Click);
+            // 
             // imageCreationToolStripMenuItem
             // 
             this.imageCreationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.histogramToolStripMenuItem,
             this.fractalToolStripMenuItem});
             this.imageCreationToolStripMenuItem.Name = "imageCreationToolStripMenuItem";
-            this.imageCreationToolStripMenuItem.Size = new System.Drawing.Size(173, 29);
+            this.imageCreationToolStripMenuItem.Size = new System.Drawing.Size(142, 29);
             this.imageCreationToolStripMenuItem.Text = "Image Creation";
             this.imageCreationToolStripMenuItem.Click += new System.EventHandler(this.imageCreationToolStripMenuItem_Click);
             // 
             // histogramToolStripMenuItem
             // 
             this.histogramToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorsToolStripMenuItem,
             this.luminosityToolStripMenuItem1});
             this.histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(198, 34);
             this.histogramToolStripMenuItem.Text = "Histogram";
             this.histogramToolStripMenuItem.Click += new System.EventHandler(this.histogramToolStripMenuItem_Click);
+            // 
+            // colorsToolStripMenuItem
+            // 
+            this.colorsToolStripMenuItem.Name = "colorsToolStripMenuItem";
+            this.colorsToolStripMenuItem.Size = new System.Drawing.Size(200, 34);
+            this.colorsToolStripMenuItem.Text = "Colors";
+            this.colorsToolStripMenuItem.Click += new System.EventHandler(this.colorsToolStripMenuItem_Click);
+            // 
+            // luminosityToolStripMenuItem1
+            // 
+            this.luminosityToolStripMenuItem1.Name = "luminosityToolStripMenuItem1";
+            this.luminosityToolStripMenuItem1.Size = new System.Drawing.Size(200, 34);
+            this.luminosityToolStripMenuItem1.Text = "Luminosity";
+            this.luminosityToolStripMenuItem1.Click += new System.EventHandler(this.luminosityToolStripMenuItem1_Click);
             // 
             // fractalToolStripMenuItem
             // 
             this.fractalToolStripMenuItem.Name = "fractalToolStripMenuItem";
-            this.fractalToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.fractalToolStripMenuItem.Size = new System.Drawing.Size(198, 34);
             this.fractalToolStripMenuItem.Text = "Fractal";
             this.fractalToolStripMenuItem.Click += new System.EventHandler(this.fractalToolStripMenuItem_Click);
             // 
@@ -241,7 +306,7 @@
             // 
             this.openImageToolStripMenuItem.Name = "openImageToolStripMenuItem";
             this.openImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openImageToolStripMenuItem.Size = new System.Drawing.Size(173, 29);
+            this.openImageToolStripMenuItem.Size = new System.Drawing.Size(142, 29);
             this.openImageToolStripMenuItem.Text = "Open Image";
             this.openImageToolStripMenuItem.Click += new System.EventHandler(this.openImageToolStripMenuItem_Click);
             // 
@@ -253,7 +318,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(882, 716);
+            this.tabControl1.Size = new System.Drawing.Size(913, 716);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage1
@@ -263,23 +328,45 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 34);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(874, 678);
+            this.tabPage1.Size = new System.Drawing.Size(905, 678);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Image Editor";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.panel4);
             this.panel3.Controls.Add(this.panelChooseBtn);
             this.panel3.Controls.Add(this.panelInputText);
             this.panel3.Controls.Add(this.bringInput2);
             this.panel3.Controls.Add(this.bringChoose);
-            this.panel3.Controls.Add(this.pictureBox1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(868, 672);
+            this.panel3.Size = new System.Drawing.Size(899, 672);
             this.panel3.TabIndex = 5;
+            // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.Controls.Add(this.pictureBox1);
+            this.panel4.Location = new System.Drawing.Point(360, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(539, 672);
+            this.panel4.TabIndex = 4;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = global::WinFormsApp1.Properties.Resources.Jesko;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(539, 672);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // panelChooseBtn
             // 
@@ -379,16 +466,6 @@
             this.bringChoose.Visible = false;
             this.bringChoose.Click += new System.EventHandler(this.button1_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::WinFormsApp1.Properties.Resources.Jesko;
-            this.pictureBox1.Location = new System.Drawing.Point(334, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(598, 716);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -405,7 +482,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 34);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(874, 678);
+            this.tabPage2.Size = new System.Drawing.Size(905, 678);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "QR Code";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -419,7 +496,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(868, 672);
+            this.panel2.Size = new System.Drawing.Size(899, 672);
             this.panel2.TabIndex = 6;
             // 
             // label3
@@ -440,7 +517,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::WinFormsApp1.Properties.Resources.qrCode2Green;
+            this.pictureBox2.Image = global::WinFormsApp1.Properties.Resources.QRcode;
             this.pictureBox2.Location = new System.Drawing.Point(334, 0);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(598, 716);
@@ -471,17 +548,10 @@
             // 
             this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(186, 0);
+            this.panel1.Location = new System.Drawing.Point(155, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(882, 716);
+            this.panel1.Size = new System.Drawing.Size(913, 716);
             this.panel1.TabIndex = 4;
-            // 
-            // luminosityToolStripMenuItem1
-            // 
-            this.luminosityToolStripMenuItem1.Name = "luminosityToolStripMenuItem1";
-            this.luminosityToolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
-            this.luminosityToolStripMenuItem1.Text = "Luminosity";
-            this.luminosityToolStripMenuItem1.Click += new System.EventHandler(this.luminosityToolStripMenuItem1_Click);
             // 
             // Form1
             // 
@@ -499,10 +569,11 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.panel3.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelChooseBtn.ResumeLayout(false);
             this.panelInputText.ResumeLayout(false);
             this.panelInputText.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -559,5 +630,12 @@
         private ToolStripMenuItem toolStripMenuItem1;
         private ToolStripMenuItem greyScaleToolStripMenuItem;
         private ToolStripMenuItem luminosityToolStripMenuItem1;
+        private ToolStripMenuItem shearToolStripMenuItem;
+        private ToolStripMenuItem contourDetectionToolStripMenuItem;
+        private ToolStripMenuItem blurFlouToolStripMenuItem1;
+        private ToolStripMenuItem contourDetectionToolStripMenuItem1;
+        private ToolStripMenuItem sharpenNetteToolStripMenuItem;
+        private Panel panel4;
+        private ToolStripMenuItem colorsToolStripMenuItem;
     }
 }

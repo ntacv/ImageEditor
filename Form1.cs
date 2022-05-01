@@ -18,11 +18,18 @@ namespace WinFormsApp1
             Icon ico = Icon.ExtractAssociatedIcon("../../../Files/other/pixels.ico");
             this.Icon = ico;
 
-            path = "../../../Files/Img/NoWayHome.bmp";
+            path = "../../../Files/Img/Jesko.bmp";
             output = "../../../Files/Img/Output.bmp";
-            pathQr = "../../../Files/Img/";
+            pathQr = "../../../Files/Img/QRcode.bmp";
 
             this.image = new MyImage(path);
+
+            /*
+            MyImage jesko = new MyImage(path);
+            jesko.Blur(10);
+            jesko.ToBlackAndWhite();
+            jesko.From_Image_To_File("Output.bmp", true);
+            */
 
             panel1.BringToFront();
             panelChooseBtn.BringToFront();
@@ -81,7 +88,7 @@ namespace WinFormsApp1
             {
                 //pathQr = "../../../Files/Img/";
                 QRCode qrCode = new QRCode(input);
-                pictureBox2.ImageLocation = output;
+                pictureBox2.ImageLocation = pathQr;
             }
             else label3.Text = "Input text is too long"; 
         }
@@ -92,7 +99,7 @@ namespace WinFormsApp1
         private void GreyScale(object sender, EventArgs e)
         {
             image.GreyScale();
-            image.From_Image_To_File(output);
+            image.From_Image_To_File("output.bmp");
             pictureBox1.ImageLocation = output;
 
         }
@@ -106,7 +113,7 @@ namespace WinFormsApp1
             image.Blur();
             image.Blur();
             image.Blur();
-            image.From_Image_To_File(output);
+            image.From_Image_To_File("output.bmp");
             pictureBox1.ImageLocation = output;
         }
 
@@ -123,7 +130,7 @@ namespace WinFormsApp1
             if (textBox2.Text.Length > 0)
             {
                 image.Rotate(ProgramImage.strInputToDouble(textBox2.Text));
-                image.From_Image_To_File(output);
+                image.From_Image_To_File("output.bmp");
                 pictureBox1.ImageLocation = output;
             }
 
@@ -142,28 +149,28 @@ namespace WinFormsApp1
         private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
         {
             image.Histogram();
-            image.From_Image_To_File(output);
+            image.From_Image_To_File("output.bmp");
             pictureBox1.ImageLocation = output;
         }
 
         private void fractalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             image.Mandelbrot();
-            image.From_Image_To_File(output);
+            image.From_Image_To_File("output.bmp");
             pictureBox1.ImageLocation = output;
         }
 
         private void xAxisToolStripMenuItem_Click(object sender, EventArgs e)
         {
             image.Mirror();
-            image.From_Image_To_File(output);
+            image.From_Image_To_File("output.bmp");
             pictureBox1.ImageLocation = output;
         }
 
         private void blackWhiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             image.ToBlackAndWhite();
-            image.From_Image_To_File(output);
+            image.From_Image_To_File("output.bmp");
             pictureBox1.ImageLocation = output;
         }
 
@@ -180,7 +187,7 @@ namespace WinFormsApp1
         private void negatifToolStripMenuItem_Click(object sender, EventArgs e)
         {
             image.Negatif();
-            image.From_Image_To_File(output);
+            image.From_Image_To_File("output.bmp");
             pictureBox1.ImageLocation = output;
         }
 
@@ -191,7 +198,7 @@ namespace WinFormsApp1
             if (textBox2.Text.Length > 0)
             {
                 image.Luminosity(Convert.ToInt32(ProgramImage.strInputToDouble(textBox2.Text)));
-                image.From_Image_To_File(output);
+                image.From_Image_To_File("output.bmp");
                 pictureBox1.ImageLocation = output;
             }
         }
@@ -203,7 +210,7 @@ namespace WinFormsApp1
             if (textBox2.Text.Length > 0)
             {
                 image.Agrandissement(Convert.ToInt32(ProgramImage.strInputToDouble(textBox2.Text)));
-                image.From_Image_To_File(output);
+                image.From_Image_To_File("output.bmp");
                 pictureBox1.ImageLocation = output;
             }
         }
@@ -215,7 +222,7 @@ namespace WinFormsApp1
             if (textBox2.Text.Length > 0)
             {
                 image.Retrecir(Convert.ToInt32(ProgramImage.strInputToDouble(textBox2.Text)));
-                image.From_Image_To_File(output);
+                image.From_Image_To_File("output.bmp");
                 pictureBox1.ImageLocation = output;
             }
         }
@@ -223,7 +230,70 @@ namespace WinFormsApp1
         private void luminosityToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             image.HistogramLuminosity();
-            image.From_Image_To_File(output);
+            image.From_Image_To_File("output.bmp");
+            pictureBox1.ImageLocation = output;
+        }
+
+        private void yAxisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            image.Mirror('y');
+            image.From_Image_To_File("output.bmp");
+            pictureBox1.ImageLocation = output;
+        }
+
+        private void shearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelInputText.BringToFront();
+
+            if (textBox2.Text.Length > 0)
+            {
+                image.Shear(Convert.ToInt32(ProgramImage.strInputToDouble(textBox2.Text)));
+                image.From_Image_To_File("output.bmp");
+                pictureBox1.ImageLocation = output;
+            }
+        }
+
+        private void contourDetectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void contourDetectionToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            image.Contours();
+            image.From_Image_To_File("output.bmp");
+            pictureBox1.ImageLocation = output;
+        }
+
+        private void blurFlouToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            panelInputText.BringToFront();
+
+            if (textBox2.Text.Length > 0)
+            {
+                image.Shear(Convert.ToInt32(ProgramImage.strInputToDouble(textBox2.Text)));
+                image.From_Image_To_File("output.bmp");
+                pictureBox1.ImageLocation = output;
+            }
+            else
+            {
+                image.Blur();
+                image.From_Image_To_File("output.bmp");
+                pictureBox1.ImageLocation = output;
+            }
+        }
+
+        private void sharpenNetteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            image.Sharpen();
+            image.From_Image_To_File("output.bmp");
+            pictureBox1.ImageLocation = output;
+        }
+
+        private void colorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            image.Histogram();
+            image.From_Image_To_File("output.bmp");
             pictureBox1.ImageLocation = output;
         }
     }

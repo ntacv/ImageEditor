@@ -97,6 +97,7 @@ namespace ProjectA2S4
         /// <param name="fileName">path to the output file</param>
         public void From_Image_To_File(string fileName, bool openFile=false)
         {
+            fileName = pathFolder + fileName;
             //From website
             try
             {
@@ -138,7 +139,7 @@ namespace ProjectA2S4
                     }
                 }
                 sw.Close();
-                if(openFile) OpenFile(pathFolder + fileName);
+                if(openFile) OpenFile(fileName);
             }
             catch (Exception Ex)
             {
@@ -667,11 +668,14 @@ namespace ProjectA2S4
         /// <summary>
         /// Convolution : floutage de l'image
         /// </summary>
-        public void Blur(double factor=1/9)
+        public void Blur(int factor = 1)
         {
-            double[,] matBlur = new double[3, 3] { { factor, factor, factor }, { factor, factor, factor }, { factor, factor, factor } };
-
-            Convolution(matBlur);
+            //double[,] matBlur = new double[3, 3] { { factor, factor, factor }, { factor, factor, factor }, { factor, factor, factor } };
+            double[,] mat1 = new double[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+            for (int i = 0; i < factor; i++)
+            {
+                Convolution(mat1, true);
+            }
         }
         /// <summary>
         /// Convolution : affine les coutours pour améliorer la netteté
@@ -686,7 +690,7 @@ namespace ProjectA2S4
         /// Convolution pour noyau de taille 3 et 5
         /// </summary>
         /// <param name="kernel"></param>
-        public void Convolution(double[,] kernel)
+        public void Convolution(double[,] kernel, bool blur=false)
         {
             RGB[,] output = new RGB[height, width];
             for (int i = 0; i < height; i++)
@@ -731,6 +735,12 @@ namespace ProjectA2S4
                         sumR = 0;
                         sumG = 0;
                         sumB = 0;
+                    }
+                    if (blur)
+                    {
+                        sumR /= 9;
+                        sumG /= 9;
+                        sumB /= 9;
                     }
 
                     sumR = Math.Max(0, Math.Min(255, sumR));
